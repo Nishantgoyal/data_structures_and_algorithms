@@ -27,8 +27,8 @@ def get_input():
 def check_prime(N):
     '''
         - For a given number `n`
-        - loop over all the numbers `i` from 2 to (n-1)
-        - if `n` is divisible by `i`, it is not a prime
+            - loop over all the numbers `i` from 2 to (n-1)
+            - if `n` is divisible by `i`, it is not a prime
         - if `n` is not divisible by any such `i`, it is a prime number
     '''
     is_prime = True
