@@ -1,5 +1,6 @@
 import sys
-from quick_union import UnionFind
+from weighted_quick_union import UnionFind
+# from quick_union import UnionFind
 # from quick_find import UnionFind
 # from union_find import UnionFind
 
@@ -14,7 +15,7 @@ def main():
         if "U " in input_string:
             a, b = map(int, input_string.split()[1:])
             uf.union(int(a), int(b))
-            print("Connected Components: {}".format(uf.components()))
+            uf.print()
         if "C " in input_string:
             a, b = map(int, input_string.split()[1:])
             if uf.connected(int(a), int(b)):

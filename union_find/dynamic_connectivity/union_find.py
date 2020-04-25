@@ -37,5 +37,5 @@ class UnionFind:
                 connected = True
         return connected
 
-    def components(self):
-        return self._components
+    def print(self):
+        print("Connected Components : {}".format(self._components))
