@@ -1,5 +1,6 @@
 import sys
-from quick_find import UnionFind
+from quick_union import UnionFind
+# from quick_find import UnionFind
 # from union_find import UnionFind
 
 
