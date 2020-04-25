@@ -14,8 +14,7 @@ import sys
 def get_input():
     '''
         Gets the input from the command line argument. 
-        Also checks if the input is a number.
-        Throws an error if no command line argument is present
+        Throws an error if no or extra command line argument is present
     '''
     if len(sys.argv) > 2:
         raise Exception("Extra Arguments Provided...!!!")
