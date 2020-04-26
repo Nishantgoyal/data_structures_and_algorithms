@@ -8,3 +8,4 @@ The repo contains my learning and implementation of various basic algorithms.
 - Union Find
   - Dynamic Connectivity
   - Percolation
+- Triple Sum
