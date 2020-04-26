@@ -7,3 +7,4 @@ The repo contains my learning and implementation of various basic algorithms.
 - prime number
 - Union Find
   - Dynamic Connectivity
+  - Percolation
