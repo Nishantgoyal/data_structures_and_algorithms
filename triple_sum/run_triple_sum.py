@@ -2,13 +2,13 @@ import random
 import sys
 import time
 import math
-# import timeit
 
-from brute_force import TripleSum
+from triple_sum_with_binary_search import TripleSum
+# from brute_force import TripleSum
 
 
 def gen_random_arr(size):
-    bound = 2000
+    bound = 20000
     arr = [random.randint(-1 * bound, bound)
            for i in range(size)]
     return arr
@@ -17,9 +17,10 @@ def gen_random_arr(size):
 def run_triple_sum():
     last = 0
     ratio = 1
-    i = 2
+    i = 1
+    random.seed(200)
     while True:
-        arr = gen_random_arr(i)
+        arr = list(set(gen_random_arr(i)))
         ts = TripleSum(arr)
         start_time = time.time()
         count = ts.count_triple_sums()
@@ -27,9 +28,9 @@ def run_triple_sum():
         if last != 0:
             ratio = duration / last
         last = duration
-        # ts.save_triple_count(count, duration)
-        print("For \n\tsize:\t\t{}\n\tcount:\t\t{}\n\tduration:\t{:.3f}\n\tlog_ratio:\t{}".format(
-            i, count, duration, math.log2(ratio)))
+        print("\nsize:\t\t{}\nduration:\t{:.3f}s\ncount:\t\t{}\nlog_ratio:\t{}".format(
+            i, duration, count, math.log2(ratio)))
+        print("<<<<<<<<<<<<===============>>>>>>>>>>>>")
         i *= 2
 
 

@@ -2,11 +2,10 @@ class Search:
 
     def search(self, arr, ele):
         low = 0
-        high = len(arr)
+        high = len(arr) - 1
         found = False
-        while low < high:
+        while low <= high:
             mid = int((low + high) / 2)
-            # print("{} {} {} --> {}".format(low, mid, high, arr[mid]))
             if arr[mid] == ele:
                 found = True
             if arr[mid] < ele:
