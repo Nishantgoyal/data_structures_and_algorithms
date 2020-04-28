@@ -1,15 +1,15 @@
-class Node:
-    def __init__(self, item):
-        self.item = item
-        self.next_node = None
-
 
 class Stack:
+    class _Node:
+        def __init__(self, item):
+            self.item = item
+            self.next_node = None
+
     def __init__(self):
         self._stack = None
 
     def push(self, ele):
-        n = Node(ele)
+        n = self._Node(ele)
         if self._stack is None:
             self._stack = n
         else:
