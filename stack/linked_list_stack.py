@@ -1,6 +1,7 @@
 class Node:
-    item = ""
-    next_node = None
+    def __init__(self, item):
+        self.item = item
+        self.next_node = None
 
 
 class Stack:
@@ -8,8 +9,7 @@ class Stack:
         self._stack = None
 
     def push(self, ele):
-        n = Node()
-        n.item = ele
+        n = Node(ele)
         if self._stack is None:
             self._stack = n
         else:
@@ -35,18 +35,40 @@ class Stack:
         s = self._stack
         while s is not None:
             l += 1
-            s = self._stack.next_node
+            s = s.next_node
+        return l
+
+    def print(self):
+        print("Length: {}".format(len(self)))
+        ele = []
+        s = self._stack
+        while s is not None:
+            ele.append(s.item)
+            s = s.next_node
+        print(" --> ".join([str(e) for e in ele]))
 
 
 if __name__ == "__main__":
     s = Stack()
+    s.print()
     s.push(20)
+    s.print()
     s.push("hello")
+    s.print()
     s.push("2")
+    s.print()
     print(s.size())
     print(len(s))
     print(s.pop())
+    s.print()
     print(s.pop())
+    s.print()
     print(s.pop())
+    s.print()
     print(s.is_empty())
     print(s.pop())
+    s.print()
+    s.push("2")
+    s.print()
+    print(s.pop())
+    s.print()
