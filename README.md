@@ -5,6 +5,7 @@ The repo contains my learning and implementation of various basic algorithms.
 - Stacks
 - Queues
 - Search
+- Sort
 - prime number
 - Union Find
   - Dynamic Connectivity
