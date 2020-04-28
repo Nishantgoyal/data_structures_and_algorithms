@@ -7,17 +7,25 @@ class Queue:
 
     def __init__(self):
         self._queue = None
+        self._queue_end = None
 
     def enqueue(self, ele):
+        ''' Enqueue in the end '''
         print("Enqueuing element: {}".format(ele))
-        temp = self._queue
         n = self._Node(ele)
         if self._queue is None:
             self._queue = n
+            self._queue_end = n
             return
-        while temp.next_node is not None:
-            temp = temp.next_node
-        temp.next_node = n
+
+        self._queue_end.next_node = n
+        self._queue_end = self._queue_end.next_node
+        # if self._queue is None:
+        #     self._queue = n
+        #     return
+        # while temp.next_node is not None:
+        #     temp = temp.next_node
+        # temp.next_node = n
 
     def dequeue(self):
         if self._queue is None:
