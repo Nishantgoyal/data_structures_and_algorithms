@@ -3,6 +3,7 @@
 The repo contains my learning and implementation of various basic algorithms.
 
 - Stacks
+- Queues
 - Search
 - prime number
 - Union Find
