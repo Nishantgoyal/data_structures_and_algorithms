@@ -44,12 +44,17 @@ class Point:
         return dist
 
     def angle(self, point):
-        angle_self = math.atan2(self._x, self._y)
-        angle_point = math.atan2(point._x, point._y)
-        # return math.degrees(angle_self - angle_point)
-        return (angle_self - angle_point)
+        x_mag = float(self._x - point._x)
+        y_mag = float(self._y - point._y)
+        if x_mag == 0:
+            angle = 90 if y_mag > 0 else -90
+        angle = math.degrees(math.atan(y_mag / x_mag))
+        print("angle between {} and {} is {}".format(self, point, angle))
+        return angle
 
 
-p1 = Point(0, -10)
-p2 = Point(0, 10)
-print("Angle in radian: {}".format(p1.angle(p2)))
+if __name__ == "__main__":
+    p1 = Point(0, -10)
+    p2 = Point(0, 10)
+    print(p1 not in [p1, p2])
+    print("Angle in radian: {}".format(p1.angle(p2)))
