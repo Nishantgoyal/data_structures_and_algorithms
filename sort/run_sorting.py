@@ -4,18 +4,19 @@ import math
 
 
 # from insertion_sort import Sort
-# from bubble_sort import Sort
-from selection_sort import Sort
+from bubble_sort import Sort
+# from selection_sort import Sort
 
 
 def main():
-    bound = 200000
+    bound = 2000000
     arr_size = 1
     last_duration = 0
     ratio = 1
     while True:
         arr = [randint(-1 * bound, bound) for _ in range(arr_size)]
         s = Sort(arr)
+
         # print(s._arr)
         start = time.time()
         s.sort()
