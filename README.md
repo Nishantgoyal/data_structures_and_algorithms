@@ -25,3 +25,5 @@ The repo contains my learning and implementation of various basic algorithms.
   - brute force implementation
   - triple sum with binary search
   - triple sum in quadratic run time
+- Convex Hull
+  - Graham Scan
