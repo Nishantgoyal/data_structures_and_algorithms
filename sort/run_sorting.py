@@ -6,7 +6,8 @@ import math
 # from insertion_sort import Sort
 # from bubble_sort import Sort
 # from selection_sort import Sort
-from shell_sort import Sort
+# from shell_sort import Sort
+from merge_sort import Sort
 
 
 def main():
