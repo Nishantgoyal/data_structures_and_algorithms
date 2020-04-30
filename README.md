@@ -16,6 +16,8 @@ The repo contains my learning and implementation of various basic algorithms.
   - Selection Sort
   - Bubble Sort
   - Shell Sort
+  - Merge Sort
+  - Quick Sort
 - prime number
   - all_primes_till_N
 - Union Find

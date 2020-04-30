@@ -1,3 +1,4 @@
 *.pyc
 scratch.py
 *.json
+.idea
