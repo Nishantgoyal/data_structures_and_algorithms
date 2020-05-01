@@ -12,20 +12,21 @@ from quick_sort import Sort
 
 
 def main():
-    bound = 20
-    arr_size = 10
+    bound = 30
+    arr_size = 1
     last_duration = 0
     ratio = 1
-    seed(bound)
+    # seed(bound)
     while True:
         arr = [randint(-1 * bound, bound) for _ in range(arr_size)]
+        # arr = list(set(arr))
         s = Sort(arr)
 
-        print(s._arr)
+        print(s.arr)
         start = time.time()
         s.sort()
         duration_in_sec = time.time() - start
-        print(s._arr)
+        print(s.arr)
 
         if last_duration != 0:
             ratio = duration_in_sec / last_duration
@@ -37,7 +38,7 @@ def main():
         print("Duration: {:3f}".format(duration_in_sec))
         print("Ratio: {:.3f}".format(math.log2(ratio)))
         arr_size *= 2
-        break
+        time.sleep(5)
 
 
 if __name__ == "__main__":

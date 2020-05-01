@@ -1,28 +1,36 @@
 class Sort:
     def __init__(self, array):
-        self._arr = array
+        self.arr = array
 
     def sort(self):
-        self.sub_sort(0, len(self._arr) - 1)
-        return self._arr
+        self.sub_sort(0, len(self.arr) - 1)
 
-    def sub_sort(self, i, j):
-        print("{} {}".format(i, j))
-        ele = self._arr[i]
-        i_orig, j_orig = i, j
-        i += 1
-        if j_orig - i_orig <= 1:
+    def swap(self, i, j):
+        self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
 
-        while i < j:
-            if self._arr[i] <= ele:
+    def partition(self, left, right):
+        i = left
+        j = right + 1
+        while True:
+            i += 1
+            while self.arr[i] < self.arr[left]:
                 i += 1
-            elif self._arr[j] >= ele:
+                if i == right:
+                    break
+            j -= 1
+            while self.arr[j] > self.arr[left]:
                 j -= 1
-            elif self._arr[i] > ele > self._arr[j]:
-                self._arr[i], self._arr[j] = self._arr[j], self._arr[i]
-        self._arr[i_orig], self._arr[i -
-                                     1] = self._arr[i - 1], self._arr[i_orig]
-        if i-2 > i_orig:
-            self.sub_sort(i_orig, i - 2)
-        if i < j_orig:
-            self.sub_sort(i, j_orig)
+                if j == left:
+                    break
+            if i >= j:
+                break
+            self.swap(i, j)
+        self.swap(left, j)
+        return j
+
+    def sub_sort(self, left, right):
+        if left >= right:
+            return
+        j = self.partition(left, right)
+        self.sub_sort(left, j - 1)
+        self.sub_sort(j + 1, right)
