@@ -63,3 +63,4 @@ if __name__ == "__main__":
     arr = ["3", "43", "23", "56", "57", "72"]
     s = Select(arr)
     print(s.select(2))
+p
