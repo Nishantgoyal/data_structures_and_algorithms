@@ -18,7 +18,10 @@ def main():
     ratio = 1
     # seed(bound)
     while True:
+        print("{}".format("<") * 10, "{}".format("==")
+              * 10, "{}".format(">") * 10)
         arr = [randint(-1 * bound, bound) for _ in range(arr_size)]
+        print("Initialised Array of size: {}..!!".format(arr_size))
         # arr = list(set(arr))
         s = Sort(arr)
 
@@ -32,9 +35,7 @@ def main():
             ratio = duration_in_sec / last_duration
         last_duration = duration_in_sec
 
-        print("{}".format("<") * 10, "{}".format("==")
-              * 10, "{}".format(">") * 10)
-        print("Array Size: {}".format(len(arr)))
+        # print("Array Size: {}".format(len(arr)))
         print("Duration: {:3f}".format(duration_in_sec))
         print("Ratio: {:.3f}".format(math.log2(ratio)))
         arr_size *= 2

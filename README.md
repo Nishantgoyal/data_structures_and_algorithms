@@ -11,6 +11,8 @@ The repo contains my learning and implementation of various basic algorithms.
 - Search
   - brute search
   - binary search
+- Selection
+  - Quick Select
 - Sort
   - Insertion Sort
   - Selection Sort
