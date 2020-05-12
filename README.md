@@ -20,6 +20,7 @@ The repo contains my learning and implementation of various basic algorithms.
   - Shell Sort
   - Merge Sort
   - Quick Sort
+  - Quick Sort with 3-way partitioning
 - prime number
   - all_primes_till_N
 - Union Find
