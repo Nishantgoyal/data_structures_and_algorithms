@@ -5,22 +5,20 @@ class Sort:
     def sort(self):
         l = len(self.arr)
         # Initially left = 0 and right = l - 1
-        self.sub_sort(0, l - 1)
+        self.quick_sort(0, l - 1)
 
-    def sub_sort(self, left, right):
-        # print("subsort {} {}".format(left, right))
+    def quick_sort(self, left, right):
+        # print("quicksort {} {}".format(left, right))
         # print("Array:{}".format(self.arr))
         if left >= right:
             return
         i, j = self.partition(left, right)
-        self.sub_sort(left, i - 1)
-        self.sub_sort(j + 1, right)
-        # print(self.arr)
+        self.quick_sort(left, i - 1)
+        self.quick_sort(j + 1, right)
 
     def partition(self, left, right):
         # print("\tPartitioning --> left:{} right:{}".format(left, right))
         i = left + 1
-        # j = right
         while True:
             # print("\tArray:{}".format(self.arr))
             # print("\tleft:{} i:{} right:{}".format(left, i, right))
@@ -36,13 +34,8 @@ class Sort:
                 # print("\tIncrementing i")
                 i += 1
                 continue
-            if self.arr[left] < self.arr[right]:
-                # print("\tDecrementing right")
-                # self.swap(right, i)
-                right -= 1
-                continue
-            if self.arr[left] >= self.arr[right]:
-                # print("\tDecrementing right and swapping i and right")
+            if self.arr[i] > self.arr[left]:
+                # print("\tDecrementing right and swapping i with right")
                 self.swap(right, i)
                 right -= 1
                 continue
