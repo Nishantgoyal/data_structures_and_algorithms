@@ -3,51 +3,46 @@ class Sort:
         self.arr = array
 
     def sort(self):
-        self.sub_sort(0, len(self.arr) - 1)
+        l = len(self.arr)
+        # Initially left = 0 and right = 1
+        self.quick_sort(0, l - 1)
 
-    def swap(self, i, j):
-        # print("Swapping ele A[i]: {} at i: {} and ele A[j] {} at j: {}".format(
-        #     self.arr[i], i, self.arr[j], j))
-        self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
-        # print("Array after swap: {}".format(self.arr))
-
-    def partition(self, left, right):
-        i = left
-        j = right + 1
-        while True:
-            # print(self.arr)
-            # print(i, j)
-            # print(left, right)
-            # print(self.arr[left])
-            # print("true")
-            # if i >= j:
-            #     break
-            i += 1
-            if i < right:
-                while self.arr[i] < self.arr[left]:
-                    # print("i:{}".format(i))
-                    i += 1
-                    if i == right:
-                        break
-            j -= 1
-            if j > left:
-                while self.arr[j] > self.arr[left]:
-                    # print("j:{}".format(j))
-                    j -= 1
-                    if j == left:
-                        break
-            if i >= j:
-                break
-            self.swap(i, j)
-        self.swap(left, j)
-        return j
-
-    def sub_sort(self, left, right):
-        # print("subsort {} {}".format(left, right))
-        # print(self.arr)
+    def quick_sort(self, left, right):
+        # print("\tquicksort {} {}".format(left, right))
+        # print("\tArray: {}".format(self.arr))
         if left >= right:
             return
         j = self.partition(left, right)
-        self.sub_sort(left, j - 1)
-        self.sub_sort(j + 1, right)
-        # print(self.arr)
+        self.quick_sort(left, j - 1)
+        self.quick_sort(j + 1, right)
+
+    def partition(self, left, right):
+        # print("\t\tpartition: Partitioning with left:{} and right:{}".format(left, right))
+        ele = self.arr[left]
+        # print("\t\tpartition: Choosen element to partition is: {}".format(ele))
+        i = left + 1
+        j = right
+        while True:
+            # print("\t\tpartition: Array: {}".format(self.arr))
+            # print("\tpartition: i:{} j:{}".format(i, j))
+            # print("\tpartition: left:{} right:{}".format(left, right))
+            if i > j:
+                break
+            if self.arr[i] <= ele:
+                # print("\tpartition: Incrementing i:{}".format(i))
+                i += 1
+                continue
+            if self.arr[j] > ele:
+                # print("\tpartition: Decrementing j:{}".format(j))
+                j -= 1
+                continue
+            if self.arr[i] > ele and self.arr[j] <= ele:
+                self.swap(i, j)
+        self.swap(left, j)
+        return j
+
+    def swap(self, i, j):
+        # print("\t\t\tSwapping ele {} at pos {} and ele {} at pos {}".format(
+        #     self.arr[i], i, self.arr[j], j))
+        self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
+        # print("\t\t\tArray after swap: {}".format(self.arr))

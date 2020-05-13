@@ -50,8 +50,8 @@ def run_tests():
 
 
 def main():
-    # run_tests()
-    run_single_test()
+    run_tests()
+    # run_single_test()
 
 
 if __name__ == "__main__":
