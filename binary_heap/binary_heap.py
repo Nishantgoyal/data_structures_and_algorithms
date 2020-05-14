@@ -1,3 +1,6 @@
+import sys
+
+
 class BinaryHeap:
     def __init__(self, type="Max"):
         self._type = type
@@ -17,15 +20,17 @@ class BinaryHeap:
 
     def swim(self, index_ele):
         print("\t\tSwimming {} at {}".format(self._heap[index_ele], index_ele))
-        index_par = index_ele // 2
+        index_par = (index_ele - 1) // 2
         if self._type == "Max":
             if self._heap[index_ele] > self._heap[index_par]:
                 self._heap[index_ele], self._heap[index_par] = self._heap[index_par], self._heap[index_ele]
-                self.swim(index_par)
+                if index_par > 0:
+                    self.swim(index_par)
         else:
             if self._heap[index_ele] < self._heap[index_par]:
                 self._heap[index_ele], self._heap[index_par] = self._heap[index_par], self._heap[index_ele]
-                self.swim(index_par)
+                if index_par > 0:
+                    self.swim(index_par)
 
     def print_heap(self):
         heap_string = ""
@@ -95,11 +100,39 @@ class BinaryHeap:
 
 
 if __name__ == "__main__":
-    arr = [54, 65, 32, 89, 56, 3, 84, 24, 57, 25, 86, 64, 27, 3]
-    # print(arr)
-    heap = BinaryHeap("Min")
-    heap.create_heap(arr)
+
+    heap_type = ""
+    while heap_type not in ["Max", "Min"]:
+        print("Please Enter the Type of heap. (Max/Min). Enter 'X' to Exit")
+        heap_type = input()
+        if heap_type == "X":
+            sys.exit()
+        if heap_type not in ["Max", "Min"]:
+            print("Invalid Type. Please retry.")
+
+    heap = BinaryHeap(heap_type)
     heap.print_heap()
 
-    heap.get_ele()
-    heap.print_heap()
+    while True:
+        print("Enter Choice: (I: Insert Ele, G: Get top element, X: Exit")
+        inp = input()
+        if inp not in ["I", "G", "X"]:
+            print("Invalid Input. Please retry.")
+            continue
+        if inp == "I":
+            print("Enter integer to insert")
+            try:
+                val = int(input())
+                heap.insert_item(val)
+                heap.print_heap()
+            except Exception as ex:
+                print("Exception {}".format(ex))
+                print("Invalid data. Please retry.")
+            continue
+        if inp == "G":
+            ele = heap.get_ele()
+            print("{} element is {}".format(heap_type, ele))
+            heap.print_heap()
+            continue
+        if inp == "X":
+            sys.exit()
