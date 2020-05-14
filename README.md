@@ -2,12 +2,18 @@
 
 The repo contains my learning and implementation of various basic algorithms.
 
+## Data Structures
+
 - Stacks
   - linked list implementation
   - array implementation
 - Queues
   - linked list implementation
   - array implementation
+- Binary Heap
+
+## Algorithms
+
 - Search
   - brute search
   - binary search
