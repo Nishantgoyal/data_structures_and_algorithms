@@ -8,8 +8,9 @@ import math
 # from selection_sort import Sort
 # from shell_sort import Sort
 # from merge_sort import Sort
-# from quick_sort import Sort
-from quick_sort_3_way_partitioning import Sort
+from quick_sort import Sort
+# from quick_sort_3_way_partitioning import Sort
+# from heap_sort import Sort
 
 
 def run_single_test():
