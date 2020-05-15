@@ -14,7 +14,7 @@ class Sort:
             self._heap_len = len(arr)
             for i in range(self._heap_len - 1, -1, -1):
                 # print("Swimming Element {}".format(i))
-                self.swim(i)
+                self.sink(i)
 
         def insert_item(self, ele):
             # print("\tInserting {}".format(ele))
