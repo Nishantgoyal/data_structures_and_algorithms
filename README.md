@@ -40,3 +40,7 @@ The repo contains my learning and implementation of various basic algorithms.
   - triple sum in quadratic run time
 - Convex Hull
   - Graham Scan (WIP)
+
+## Random
+
+- Taxicab Numbers

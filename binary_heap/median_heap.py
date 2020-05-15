@@ -23,13 +23,29 @@ class MedianHeap:
         # self.sink(self._heap_len)
         self._heap_len += 1
 
+    def less_than_all_par(self, index):
+        index_par = (index - 1) // 2
+        while index_par >= 0:
+            if self._heap[index] > self._heap[index_par]:
+                return False
+            index_par = (index_par - 1) // 2
+        return True
+
+    def greater_than_all_par(self, index):
+        index_par = (index - 1) // 2
+        while index_par >= 0:
+            if self._heap[index] < self._heap[index_par]:
+                return False
+            index_par = (index_par - 1) // 2
+        return True
+
     def swim(self, index_ele):
         # print("\t\tSwimming {} at {}".format(self._heap[index_ele], index_ele))
         index_par = (index_ele - 1) // 2
         if self.is_left(index_ele):
             print("\t\tSwimming from left {} at {}".format(
                 self._heap[index_ele], index_ele))
-            if self._heap[index_ele] > self._heap[index_par]:
+            if self.less_than_all_par(index_ele):
                 print("\t\tExchanging {} and {}".format(
                     self._heap[index_ele], self._heap[index_par]))
                 self._heap[index_ele], self._heap[index_par] = self._heap[index_par], self._heap[index_ele]
@@ -39,7 +55,7 @@ class MedianHeap:
         if not self.is_left(index_ele):
             print("\t\tSwimming from right {} at {}".format(
                 self._heap[index_ele], index_ele))
-            if self._heap[index_ele] < self._heap[index_par]:
+            if self.greater_than_all_par(index_ele):
                 print("\t\tExchanging {} and {}".format(
                     self._heap[index_ele], self._heap[index_par]))
                 self._heap[index_ele], self._heap[index_par] = self._heap[index_par], self._heap[index_ele]
