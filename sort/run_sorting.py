@@ -11,7 +11,7 @@ import math
 from quick_sort import Sort
 # from quick_sort_3_way_partitioning import Sort
 # from heap_sort import Sort
-# from heap_sort_v2 import Sort
+# from heap_sort_bottom_up import Sort
 
 
 def run_single_test():
