@@ -11,6 +11,8 @@ The repo contains my learning and implementation of various basic algorithms.
   - linked list implementation
   - array implementation
 - Binary Heap
+  - Min/Max
+  - Median (WIP)
 
 ## Algorithms
 
