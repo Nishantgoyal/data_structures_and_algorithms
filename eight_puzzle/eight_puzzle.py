@@ -10,9 +10,13 @@ class EightPuzzle:
         puzzle = []
         while True:
             ele = randint(0, 8)
-            # print("Choosen Element: {}".format(ele))
             if ele not in puzzle:
                 puzzle.append(ele)
+                if ele == 0:
+                    self._blank_pos = (
+                        puzzle.index(0) // self._n,
+                        puzzle.index(0) % self._n
+                    )
             if len(puzzle) == self._n ** 2:
                 break
         return self.convert_to_square(puzzle)
