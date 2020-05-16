@@ -79,7 +79,7 @@ class EightPuzzle:
             move, value_at_move, difference))
         return difference
 
-    def calculate_move_weight(self, move):
+    def get_min_move(self, move):
         print("Calculating Weight of Move")
         blank_x, blank_y = self._blank_pos
         required_value_at_blank = self.get_value_at_pos(blank_x, blank_y)
@@ -95,3 +95,4 @@ class EightPuzzle:
                 min_move = move
                 min_diff = difference
         print("Minimum Weight Move: {}".format(min_move))
+        return min_move
