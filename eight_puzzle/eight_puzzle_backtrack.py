@@ -10,11 +10,31 @@ class EightPuzzle:
         self._tab_size = 0
         self.size = 3
         self._state = []
+        self._invalid_state = []
         self._blank_pos = None
         self._print("Initialising Eight Puzzle Class")
-        self.initialize_puzzle()
-        self.dump_state()
+        # self.initialize_puzzle()
+        self.dummy_data()
+        # self.dump_state()
         self._print("Initialisation Complete")
+
+    def dummy_data(self):
+        puzzle = [
+            [2, 4, 3],
+            [1, 8, 5],
+            [7, 0, 6]
+        ]
+        self._blank_pos = self.get_blank_pos(puzzle)
+        all_moves = {str(moves): 0 for moves in self.get_all_possible_moves()}
+        self._state.append({
+            "puzzle": puzzle, "moves": all_moves
+        })
+
+    def get_blank_pos(self, puzzle):
+        for i in range(self.size):
+            for j in range(self.size):
+                if puzzle[i][j] == 0:
+                    return [i, j]
 
     def initialize_puzzle(self):
         self._tab_size += 1
@@ -45,7 +65,7 @@ class EightPuzzle:
         return all_pos_moves
 
     def dump_state(self):
-        data = deepcopy(self._state[::-1])
+        data = deepcopy(self._state)
         data = [
             {
                 "puzzle": str(ele["puzzle"]),
@@ -69,10 +89,13 @@ class EightPuzzle:
                 print("No Moves Present, BackTracking...")
             else:
                 print("Moving...")
-            time.sleep(2)
+            # time.sleep(0.05)
+            # print(len(self._state))
             # else:
             #     break
             self._tab_size -= 1
+        else:
+            print("Puzzle Solved")
         self._tab_size -= 1
 
     def is_solved(self):
@@ -111,17 +134,26 @@ class EightPuzzle:
             possible_moves = self.get_moves_from_state(puzzle)
             self._print("Possible Moves for puzzle: {} are: {}".format(
                 puzzle, possible_moves))
-            self._state.append({
-                "puzzle": deepcopy(puzzle), "moves": deepcopy(possible_moves)
-            })
+            if str(puzzle) not in self._invalid_state:
+                self._state.append({
+                    "puzzle": deepcopy(puzzle), "moves": deepcopy(possible_moves)
+                })
+            else:
+                print("Invalid..." + str(puzzle))
+                current_state = self._state[-1]["puzzle"]
+                for i in range(self.size):
+                    for j in range(self.size):
+                        if current_state[i][j] == 0:
+                            self._blank_pos = [i, j]
         else:
+            self._invalid_state.append(str(current_state["puzzle"]))
             current_state = self._state[-1]["puzzle"]
             for i in range(self.size):
                 for j in range(self.size):
                     if current_state[i][j] == 0:
                         self._blank_pos = [i, j]
         self._tab_size -= 1
-        self.dump_state()
+        # self.dump_state()
         return chosen_move is not None
 
     def get_moves_from_state(self, cur_puzzle):
@@ -157,7 +189,7 @@ class EightPuzzle:
         self._tab_size += 1
         self._print("Creating Permutation")
         permutation = []
-        seed(10)
+        # seed(10)
         while True:
             element = randint(0, 8)
             if element not in permutation:
