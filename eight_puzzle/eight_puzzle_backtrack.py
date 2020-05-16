@@ -9,11 +9,13 @@ class EightPuzzle:
         self.size = 3
         self._print("Initialising Eight Puzzle Class")
         self.initialize_puzzle()
+        self._print("Initialisation Complete")
 
     def initialize_puzzle(self):
         self._tab_size += 1
         self._print("Initializing Puzzle")
         permutation = self.create_permutation()
+        self.create_2d_puzzle_from_permutaion(permutation)
         self._tab_size -= 1
 
     def create_permutation(self):
@@ -32,6 +34,22 @@ class EightPuzzle:
         self._print("Permutaion: {}".format(permutation))
         self._tab_size -= 1
         return permutation
+
+    def create_2d_puzzle_from_permutaion(self, permutation):
+        self._tab_size += 1
+        self._print("Creating 2D from permutation: {}".format(permutation))
+        puzzle = []
+        for i in range(self.size):
+            self._tab_size += 1
+            puzzle.append([])
+            for j in range(self.size):
+                self._tab_size += 1
+                index = (i * self.size) + j
+                puzzle[i].append(permutation[index])
+                self._tab_size -= 1
+            self._tab_size -= 1
+        self._print("Created 2D puzzle from permutation: {}".format(puzzle))
+        self._tab_size -= 1
 
     def _print(self, message):
         sep = "  "
