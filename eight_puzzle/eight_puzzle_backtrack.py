@@ -75,6 +75,7 @@ class EightPuzzle:
         self._tab_size += 1
         self._print("Making a Move")
         current_state = self._state.pop()
+        self._print("Current State: {}".format(current_state))
         chosen_move = None
         is_valid_move = False
         for move in current_state["moves"]:
