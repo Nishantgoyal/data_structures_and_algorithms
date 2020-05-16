@@ -4,7 +4,7 @@ from eight_puzzle_backtrack import EightPuzzle
 
 def main():
     ep = EightPuzzle()
-    # ep.solve_puzzle()
+    ep.solve()
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 from random import randint, seed
 from copy import deepcopy
 import json
+import sys
 
 
 class EightPuzzle:
@@ -42,10 +43,41 @@ class EightPuzzle:
         self._tab_size -= 1
         return all_pos_moves
 
+    def dump_state(self):
+        data = deepcopy(self._state)
+        data = [
+            {
+                "puzzle": str(ele["puzzle"]),
+                "moves": ele["moves"]
+            }
+            for ele in data]
+        fName = "{}_state.json".format(__name__.split(".")[0])
+        with open(fName, "w") as f:
+            json.dump(data, f, indent=2)
+
+    def solve(self):
+        self._tab_size += 1
+        self._print("Solving Puzzle...")
+        while True:
+            self._tab_size += 1
+            # self._print("Press 'm' to move, 'b' to backtrack, "
+            #             "'p' to print the current_state, any other key to quit")
+            inp = input("Press 'm' to move, 'b' to backtrack, "
+                        "'p' to print the current_state, any other key to quit\t")
+            if inp == "m":
+                self._tab_size += 1
+                self._print("Making a Move")
+                self._tab_size -= 1
+            else:
+                break
+            self._tab_size -= 1
+        self._tab_size -= 1
+
     def create_permutation(self):
         self._tab_size += 1
         self._print("Creating Permutation")
         permutation = []
+        seed(10)
         while True:
             element = randint(0, 8)
             if element not in permutation:
@@ -82,15 +114,3 @@ class EightPuzzle:
         sep = "  "
         print(sep * self._tab_size + str(message))
         # pass
-
-    def dump_state(self):
-        data = deepcopy(self._state)
-        data = [
-            {
-                "puzzle": str(ele["puzzle"]),
-                "moves": ele["moves"]
-            }
-            for ele in data]
-        fName = "{}_state.json".format(__name__.split(".")[0])
-        with open(fName, "w") as f:
-            json.dump(data, f, indent=2)
