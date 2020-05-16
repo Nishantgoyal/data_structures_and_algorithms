@@ -5,6 +5,7 @@ from eight_puzzle_backtrack import EightPuzzle
 def main():
     ep = EightPuzzle()
     ep.print_puzzle()
+    ep.solve_puzzle()
     # while True:
     #     print("Please provide Input: (m: to move; X: to quit)")
     #     inp = input()
