@@ -6,10 +6,10 @@ class EightPuzzle:
         self._n = 3
         self._blank_pos = None
         self._puzzle = self.initialise_puzzle()
-        self._puzzle = [[1, 2, 3],
-                        [4, 5, 6],
-                        [7, 8, 0]]
-        self._blank_pos = (2, 2)
+        # self._puzzle = [[1, 2, 3],
+        #                 [4, 5, 6],
+        #                 [7, 8, 0]]
+        # self._blank_pos = (2, 2)
 
     def initialise_puzzle(self):
         puzzle = []
@@ -144,3 +144,9 @@ class EightPuzzle:
                 if required_val != val:
                     return False
         return True
+
+    def solve_puzzle(self):
+        while not self.is_solved():
+            print("Solving...")
+        else:
+            print("Solved")
