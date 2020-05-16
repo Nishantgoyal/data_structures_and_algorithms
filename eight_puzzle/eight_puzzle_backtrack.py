@@ -1,5 +1,6 @@
 from random import randint, seed
 import copy
+import json
 
 
 class EightPuzzle:
@@ -21,10 +22,10 @@ class EightPuzzle:
             if ele not in puzzle:
                 puzzle.append(ele)
                 if ele == 0:
-                    self._blank_pos = (
+                    self._blank_pos = [
                         puzzle.index(0) // self._n,
                         puzzle.index(0) % self._n
-                    )
+                    ]
             if len(puzzle) == self._n ** 2:
                 break
         return self.convert_to_square(puzzle)
@@ -34,13 +35,13 @@ class EightPuzzle:
         self.show_blank_space()
         moves = []
         if x - 1 >= 0:
-            moves.append((x - 1, y))
+            moves.append([x - 1, y])
         if x + 1 < self._n:
-            moves.append((x + 1, y))
+            moves.append([x + 1, y])
         if y - 1 >= 0:
-            moves.append((x, y - 1))
+            moves.append([x, y - 1])
         if y + 1 < self._n:
-            moves.append((x, y + 1))
+            moves.append([x, y + 1])
         return moves
 
     def is_solved(self):
@@ -64,14 +65,18 @@ class EightPuzzle:
         return True
 
     def make_move(self, move):
-        move_x, move_y = move
+        print("Moving to {}".format(move))
+        move_x, move_y = move.split(",")
+        move_x = int(move_x.strip().split("[")[1])
+        move_y = int(move_y.strip().split("]")[0])
+        # print(move_x, move_y)
         blank_x, blank_y = self._blank_pos
         weight_at_min_move = self._puzzle[move_x][move_y]
 
         self._puzzle[move_x][move_y] = 0
         self._puzzle[blank_x][blank_y] = weight_at_min_move
 
-        self._blank_pos = (move_x, move_y)
+        self._blank_pos = [move_x, move_y]
 
         self.print_puzzle()
 
@@ -80,7 +85,7 @@ class EightPuzzle:
 
         all_moves = self.all_possible_moves()
 
-        possible_moves = {move: True for move in all_moves}
+        possible_moves = {str(move): True for move in all_moves}
 
         for state in self._track:
             puzzle = state["puzzle"]
@@ -89,7 +94,7 @@ class EightPuzzle:
                 for move in moves:
                     if moves[move] == False:
                         possible_moves[move] = False
-        print("Current Tracker: {}".format(self._track))
+        # print("Current Tracker: {}".format(self._track))
 
         is_move_possible = False
         chosen_move = None
@@ -109,6 +114,7 @@ class EightPuzzle:
             state["puzzle"] = copy.deepcopy(self._puzzle)
             state["moves"] = copy.deepcopy(possible_moves)
             self._track.append(state)
+            self.dump_tracker()
             self.make_move(chosen_move)
 
     def solve_puzzle(self):
@@ -151,3 +157,8 @@ class EightPuzzle:
         return (
             (x * self._n + y + 1) % (self._n ** 2)
         )
+
+    def dump_tracker(self):
+        fName = "{}_state.json".format(__file__.split(".")[0])
+        with open(fName, "w") as f:
+            json.dump(self._track, f, indent=4)
