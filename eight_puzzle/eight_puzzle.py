@@ -58,6 +58,23 @@ class EightPuzzle:
         else:
             print("Puzzle Not Initialised...")
 
-    def show_possible_moves(self):
-        moves = self.possible_moves()
+    def show_possible_moves(self, moves):
         print("Possible Moves: {}".format(moves))
+
+    def get_value_at_pos(self, x, y):
+        return (
+            x * self._n + y + 1
+        ) % (self._n ** 2)
+
+    def calculate_move_weight(self, move):
+        print("Calculating Weight of Move")
+        # print(self.show_blank_space())
+        blank_x, blank_y = self._blank_pos
+        required_value_at_blank = self.get_value_at_pos(blank_x, blank_y)
+        print("Required Value at Blank: {} is {}".format(
+            self._blank_pos, required_value_at_blank))
+        # moves = self.possible_moves()
+        # for move in moves:
+        #     move_x, move_y = move
+
+        pass
