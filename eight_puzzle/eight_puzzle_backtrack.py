@@ -24,7 +24,7 @@ class EightPuzzle:
             element = randint(0, 8)
             if element not in permutation:
                 self._tab_size += 1
-                # self._print("Chosen Element: {}".format(element))
+                self._print("Chosen Element: {}".format(element))
                 permutation.append(element)
                 self._tab_size -= 1
             if len(permutation) >= (self.size ** 2):
