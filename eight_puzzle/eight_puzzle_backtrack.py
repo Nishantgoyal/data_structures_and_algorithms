@@ -60,18 +60,65 @@ class EightPuzzle:
         self._print("Solving Puzzle...")
         while True:
             self._tab_size += 1
-            # self._print("Press 'm' to move, 'b' to backtrack, "
-            #             "'p' to print the current_state, any other key to quit")
             inp = input("Press 'm' to move, 'b' to backtrack, "
                         "'p' to print the current_state, any other key to quit\t")
             if inp == "m":
-                self._tab_size += 1
-                self._print("Making a Move")
-                self._tab_size -= 1
+                valid_move = self.move()
+                if not valid_move:
+                    print("No Moves Present")
             else:
                 break
             self._tab_size -= 1
         self._tab_size -= 1
+
+    def move(self):
+        self._tab_size += 1
+        self._print("Making a Move")
+        current_state = self._state.pop()
+        chosen_move = None
+        is_valid_move = False
+        for move in current_state["moves"]:
+            if current_state["moves"][move] == 0:
+                chosen_move = move
+                break
+        if chosen_move is not None:
+            current_state["moves"][chosen_move] = 1
+            self._state.append(current_state)
+            is_valid_move = True
+            puzzle = deepcopy(current_state["puzzle"])
+            self.make_move(puzzle, chosen_move)
+            possible_moves = self.get_moves_from_state(puzzle)
+            self._state.append({
+                "puzzle": puzzle, "moves": possible_moves
+            })
+        self._tab_size -= 1
+        self.dump_state()
+        return is_valid_move
+
+    def get_moves_from_state(self, cur_puzzle):
+        for state in self._state:
+            puzzle = state["puzzle"]
+            if self.match_puzzle(cur_puzzle, puzzle):
+                return deepcopy(state["moves"])
+        possible_moves = self.get_all_possible_moves()
+        return {str(move): 0 for move in possible_moves}
+
+    def make_move(self, puzzle, move):
+        move_x, move_y = move.split(", ")
+        move_x = int(move_x.strip().split("[")[1])
+        move_y = int(move_y.strip().split("]")[0])
+
+        blank_x, blank_y = self._blank_pos
+        puzzle[move_x][move_y], puzzle[blank_x][blank_y] = puzzle[blank_x][blank_y], puzzle[move_x][move_y]
+        self._blank_pos = [move_x, move_y]
+
+    def match_puzzle(self, puz1, puz2):
+        match = True
+        for i in range(self.size):
+            for j in range(self.size):
+                if puz1[i][j] != puz2[i][j]:
+                    match = False
+        return match
 
     def create_permutation(self):
         self._tab_size += 1
