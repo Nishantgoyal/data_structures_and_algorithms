@@ -73,6 +73,7 @@ class EightPuzzle:
 
     def get_difference(self, move, required_value_at_blank):
         move_x, move_y = move
+
         # '''
         # Algo 1:
         #     val_at_pos_blank -> x
