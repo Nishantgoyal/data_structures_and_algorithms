@@ -6,7 +6,7 @@ def main():
     ep.print_puzzle()
 
     while True:
-        print("Please provide Input: (m: to move; x: to quit)")
+        print("Please provide Input: (m: to move; X: to quit)")
         inp = input()
         if inp == "X":
             break

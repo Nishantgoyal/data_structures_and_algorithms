@@ -73,12 +73,26 @@ class EightPuzzle:
 
     def get_difference(self, move, required_value_at_blank):
         move_x, move_y = move
-        value_at_move = self._puzzle[move_x][move_y] - \
-            self.get_value_at_pos(move_x, move_y)
-        # difference = abs(value_at_move - required_value_at_blank)
-        difference = value_at_move
+        # value_at_move = self._puzzle[move_x][move_y]
+        # # value_at_move = self._puzzle[move_x][move_y] - \
+        # #     self.get_value_at_pos(move_x, move_y)
+        # difference = value_at_move - required_value_at_blank
+        # # difference = value_at_move
+        '''
+        Algo 1:
+            val_at_pos_blank -> x
+            val_at_pos_move -> y1
+            val_at_move -> y2
+            diff_at_pos_move -> abs(y2 - y1)
+            diff -> abs(x - diff_at_pos_move)
+        '''
+        val_at_pos_blank = required_value_at_blank
+        val_at_pos_move = self.get_value_at_pos(move_x, move_y)
+        val_at_move = self._puzzle[move_x][move_y]
+        diff_at_pos_move = abs(val_at_move - val_at_pos_move)
+        difference = abs(val_at_pos_blank - diff_at_pos_move)
         print("Value at move:{} is {} and Difference is: {}".format(
-            move, value_at_move, difference))
+            move, diff_at_pos_move, difference))
         return difference
 
     def get_min_move(self):
