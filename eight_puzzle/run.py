@@ -4,8 +4,7 @@ from eight_puzzle import EightPuzzle
 def main():
     ep = EightPuzzle()
     ep.print_puzzle()
-    moves = ep.possible_moves()
-    print(moves)
+    ep.show_possible_moves()
 
 
 if __name__ == "__main__":

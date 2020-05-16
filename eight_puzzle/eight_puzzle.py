@@ -49,3 +49,7 @@ class EightPuzzle:
         if x >= 0 and y + 1 >= 0:
             moves.append((x, y + 1))
         return moves
+
+    def show_possible_moves(self):
+        moves = self.possible_moves()
+        print("Possible Moves: {}".format(moves))
