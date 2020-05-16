@@ -4,6 +4,7 @@ from random import randint
 class EightPuzzle:
     def __init__(self):
         self._n = 3
+        self._blank_pos = None
         self._puzzle = self.initialise_puzzle()
 
     def initialise_puzzle(self):
@@ -49,6 +50,13 @@ class EightPuzzle:
         if x >= 0 and y + 1 >= 0:
             moves.append((x, y + 1))
         return moves
+
+    def show_blank_space(self):
+        if self._blank_pos is not None:
+            print("Blank Square at: {} {}".format(
+                self._blank_pos[0], self._blank_pos[1]))
+        else:
+            print("Puzzle Not Initialised...")
 
     def show_possible_moves(self):
         moves = self.possible_moves()
