@@ -40,12 +40,12 @@ class EightPuzzle:
     def possible_moves(self):
         x, y = self._blank_pos
         moves = []
-        if x - 1 >= 0 and y - 1 >= 0:
-            moves.append((x-1, y-1))
-        if x - 1 >= 0 and y + 1 >= 0:
-            moves.append((x-1, y+1))
-        if x + 1 >= 0 and y - 1 >= 0:
-            moves.append((x+1, y-1))
-        if x + 1 >= 0 and y + 1 >= 0:
-            moves.append((x+1, y+1))
+        if x - 1 >= 0 and y >= 0:
+            moves.append((x - 1, y))
+        if x + 1 >= 0 and y >= 0:
+            moves.append((x + 1, y))
+        if x >= 0 and y - 1 >= 0:
+            moves.append((x, y - 1))
+        if x >= 0 and y + 1 >= 0:
+            moves.append((x, y + 1))
         return moves
