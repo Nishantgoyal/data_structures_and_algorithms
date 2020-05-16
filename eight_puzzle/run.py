@@ -8,7 +8,7 @@ def main():
     while True:
         print("Please provide Input: (m: to move; X: to quit)")
         inp = input()
-        if inp == "X":
+        if inp in ["X", "x"]:
             break
         if inp == "m":
             ep.make_move()
