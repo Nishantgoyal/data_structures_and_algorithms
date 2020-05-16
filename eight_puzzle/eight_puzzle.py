@@ -89,13 +89,11 @@ class EightPuzzle:
 
         '''
         Algo 2:
-            val_at_pos_blank -> x
             val_at_pos_move -> y1
             val_at_move -> y2
             diff_at_pos_move -> abs(y2 - y1)
             diff -> diff_at_pos_move
         '''
-        val_at_pos_blank = required_value_at_blank
         val_at_pos_move = self.get_value_at_pos(move_x, move_y)
         val_at_move = self._puzzle[move_x][move_y]
         diff_at_pos_move = abs(val_at_move - val_at_pos_move)
