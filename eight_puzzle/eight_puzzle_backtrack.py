@@ -2,6 +2,7 @@ from random import randint, seed
 from copy import deepcopy
 import json
 import sys
+import time
 
 
 class EightPuzzle:
@@ -44,7 +45,7 @@ class EightPuzzle:
         return all_pos_moves
 
     def dump_state(self):
-        data = deepcopy(self._state)
+        data = deepcopy(self._state[::-1])
         data = [
             {
                 "puzzle": str(ele["puzzle"]),
@@ -58,18 +59,31 @@ class EightPuzzle:
     def solve(self):
         self._tab_size += 1
         self._print("Solving Puzzle...")
-        while True:
+        while not self.is_solved():
             self._tab_size += 1
-            inp = input("Press 'm' to move, 'b' to backtrack, "
-                        "'p' to print the current_state, any other key to quit\t")
-            if inp == "m":
-                valid_move = self.move()
-                if not valid_move:
-                    print("No Moves Present")
+            # inp = input("Press 'm' to move, 'b' to backtrack, "
+            #             "'p' to print the current_state, any other key to quit\t")
+            # if inp == "m":
+            valid_move = self.move()
+            if not valid_move:
+                print("No Moves Present, BackTracking...")
             else:
-                break
+                print("Moving...")
+            time.sleep(2)
+            # else:
+            #     break
             self._tab_size -= 1
         self._tab_size -= 1
+
+    def is_solved(self):
+        puzzle = self._state[-1]["puzzle"]
+        for i in range(self.size):
+            for j in range(self.size):
+                req_value = ((i * self.size) + j + 1) % (self.size ** 2)
+                val = puzzle[i][j]
+                if val != req_value:
+                    return False
+        return True
 
     def move(self):
         self._tab_size += 1
@@ -77,31 +91,49 @@ class EightPuzzle:
         current_state = self._state.pop()
         self._print("Current State: {}".format(current_state))
         chosen_move = None
-        is_valid_move = False
         for move in current_state["moves"]:
             if current_state["moves"][move] == 0:
                 chosen_move = move
                 break
         if chosen_move is not None:
+
+            self._print("Chosen Move: {}".format(chosen_move))
             current_state["moves"][chosen_move] = 1
             self._state.append(current_state)
-            is_valid_move = True
+            self._print("Current State: {}".format(self._state))
+
             puzzle = deepcopy(current_state["puzzle"])
+            self._print("Current Puzzle: {}".format(puzzle))
+            self._print("Blank before Move: {}".format(self._blank_pos))
             self.make_move(puzzle, chosen_move)
+            self._print("Puzzle After Move: {}".format(puzzle))
+            self._print("Blank After Move: {}".format(self._blank_pos))
             possible_moves = self.get_moves_from_state(puzzle)
+            self._print("Possible Moves for puzzle: {} are: {}".format(
+                puzzle, possible_moves))
             self._state.append({
-                "puzzle": puzzle, "moves": possible_moves
+                "puzzle": deepcopy(puzzle), "moves": deepcopy(possible_moves)
             })
+        else:
+            current_state = self._state[-1]["puzzle"]
+            for i in range(self.size):
+                for j in range(self.size):
+                    if current_state[i][j] == 0:
+                        self._blank_pos = [i, j]
         self._tab_size -= 1
         self.dump_state()
-        return is_valid_move
+        return chosen_move is not None
 
     def get_moves_from_state(self, cur_puzzle):
-        for state in self._state:
+        self._tab_size += 1
+        for state in self._state[::-1]:
             puzzle = state["puzzle"]
             if self.match_puzzle(cur_puzzle, puzzle):
+                self._print("Puzzle Match. Possible moves for puzzle: {} are: {}".format(
+                    puzzle, state["moves"]))
                 return deepcopy(state["moves"])
         possible_moves = self.get_all_possible_moves()
+        self._tab_size -= 1
         return {str(move): 0 for move in possible_moves}
 
     def make_move(self, puzzle, move):
@@ -160,5 +192,5 @@ class EightPuzzle:
 
     def _print(self, message):
         sep = "  "
-        print(sep * self._tab_size + str(message))
+        # print(sep * self._tab_size + str(message))
         # pass
