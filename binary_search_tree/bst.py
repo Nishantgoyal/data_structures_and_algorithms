@@ -2,8 +2,9 @@ import json
 
 
 class Node:
-    def __init__(self, key):
+    def __init__(self, key, value):
         self.key = key
+        self.value = value
         self.left = None
         self.right = None
 
@@ -16,7 +17,7 @@ class BST:
         self.tab_size = 0
         self._print("BST - Init Method")
 
-    def insert(self, value):
+    def insert(self, key, value):
         self._increment()
         self._print("BST - Inserting Value: {}".format(value))
         node = self.root
@@ -25,36 +26,36 @@ class BST:
         while node is not None:
             key_at_node = node.key
             parent = node
-            if value <= key_at_node:
+            if key <= key_at_node:
                 self._increment()
-                self._print("Value: {} is less then or equal to key: {}. Traversing Left".format(
-                    value, key_at_node))
+                self._print("Key: {} is less then or equal to key: {}. Traversing Left".format(
+                    key, key_at_node))
                 node = node.left
                 is_left_child = True
                 self._decrement()
             else:
                 self._increment()
-                self._print("Value: {} is greater then key: {}. Traversing Right".format(
-                    value, key_at_node))
+                self._print("Key: {} is greater then key: {}. Traversing Right".format(
+                    key, key_at_node))
                 is_left_child = False
                 node = node.right
                 self._decrement()
-        node = Node(value)
+        node = Node(key, value)
         if parent is None:
             self._increment()
-            self._print("Inserting at root: {}".format(value))
+            self._print("Inserting at root: {}".format((key, value)))
             self.root = node
             self._decrement()
         elif is_left_child:
             self._increment()
             self._print("Inserting at left: {} of parent: {}".format(
-                value, parent.key))
+                (key, value), parent.key))
             parent.left = node
             self._decrement()
         else:
             self._increment()
             self._print("Inserting at right: {} of parent: {}".format(
-                value, parent.key))
+                (key, value), parent.key))
             parent.right = node
             self._decrement()
         self._decrement()
@@ -81,7 +82,7 @@ class BST:
     def print_node(self, node, my_tree, space):
         if node is None:
             return
-        my_tree["ele"] = node.key
+        my_tree["ele"] = ": ".join([str(node.key), str(node.value)])
         if node.left is not None:
             my_tree["L"] = {}
             self.print_node(node.left, my_tree["L"], space)
@@ -92,10 +93,9 @@ class BST:
 
 if __name__ == "__main__":
     bst = BST()
-    bst.insert(8)
-    bst.insert(12)
-    bst.insert(10)
-    bst.insert(5)
-    bst.insert(15)
-    bst.insert(11)
+    bst.insert(8, "a")
+    bst.insert(12, "c")
+    bst.insert(10, "d")
+    bst.insert(5, "s")
+    bst.insert(15, "e")
     bst.print_tree()
