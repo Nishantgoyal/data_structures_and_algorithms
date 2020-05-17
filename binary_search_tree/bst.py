@@ -60,6 +60,22 @@ class BST:
             self._decrement()
         self._decrement()
 
+    def get(self, key):
+        self._increment()
+        self._print("Looking for value of key: {}".format(key))
+        node = self.root
+        value = None
+        while node is not None:
+            if key == node.key:
+                value = node.value
+                break
+            if key < node.key:
+                node = node.left
+            if key > node.key:
+                node = node.right
+        self._decrement()
+        return value
+
     def _print(self, message):
         seperator = self.seperator * self.tab_size
         message = seperator + message
@@ -76,7 +92,6 @@ class BST:
         my_tree = {}
         space = 0
         self.print_node(node, my_tree, space)
-
         print(json.dumps(my_tree, indent=2))
 
     def print_node(self, node, my_tree, space):
@@ -99,3 +114,6 @@ if __name__ == "__main__":
     bst.insert(5, "s")
     bst.insert(15, "e")
     bst.print_tree()
+
+    val = bst.get(22)
+    print(val)
