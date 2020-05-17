@@ -44,7 +44,3 @@ The repo contains my learning and implementation of various basic algorithms.
 ## Random
 
 - Taxicab Numbers
-
-## Interesting Problems
-
-- 8 puzzle
