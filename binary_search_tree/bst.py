@@ -130,26 +130,26 @@ class BST:
     def _decrement(self):
         self.tab_size -= 1
 
-    def print_tree(self):
+    def dump_tree(self):
         node = self.root
         my_tree = {}
         space = 0
-        self.print_node(node, my_tree, space)
+        self.get_trace_of_node(node, my_tree, space)
         fn = "{}_tree.json".format(__file__.split(".")[0])
         with open(fn, "w") as f:
             json.dump(my_tree, f, indent=2)
 
-    def print_node(self, node, my_tree, space):
+    def get_trace_of_node(self, node, my_tree, space):
         if node is None:
             return
         my_tree["key"] = node.key
         my_tree["value"] = node.value
         if node.left is not None:
             my_tree["L"] = {}
-            self.print_node(node.left, my_tree["L"], space)
+            self.get_trace_of_node(node.left, my_tree["L"], space)
         if node.right is not None:
             my_tree["R"] = {}
-            self.print_node(node.right, my_tree["R"], space)
+            self.get_trace_of_node(node.right, my_tree["R"], space)
 
 
 if __name__ == "__main__":
@@ -163,10 +163,10 @@ if __name__ == "__main__":
         ele = randint(0, 100)
         val = chr(ord("a") + randint(0, 25))
         bst.insert(ele, val)
-    bst.print_tree()
+    bst.dump_tree()
 
-    bst.get(22)
-    bst.get(9)
-    # print(val)
+    # bst.get(22)
+    # bst.get(9)
+    # # print(val)
 
     bst.delete(5)
