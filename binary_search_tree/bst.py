@@ -16,11 +16,11 @@ class BST:
         self.root = None
         self.seperator = "  "
         self.tab_size = 0
-        self._print("BST - Init Method")
+        self.trace("BST - Init Method")
 
     def insert(self, key, value):
         self._increment()
-        self._print("BST - Inserting key, Value: {}".format((key, value)))
+        self.trace("BST - Inserting key, Value: {}".format((key, value)))
         node = self.root
         parent = None
         is_left_child = True
@@ -29,7 +29,7 @@ class BST:
             parent = node
             if key == key_at_node:
                 self._increment()
-                self._print("Key is present in the tree, updating from earlier: {} to {}...".format(
+                self.trace("Key is present in the tree, updating from earlier: {} to {}...".format(
                     (node.key, node.value), (node.key, value)))
                 node.value = value
                 self._decrement()
@@ -37,14 +37,14 @@ class BST:
                 return
             elif key < key_at_node:
                 self._increment()
-                self._print("Key: {} is less then key: {}. Traversing Left".format(
+                self.trace("Key: {} is less then key: {}. Traversing Left".format(
                     key, key_at_node))
                 node = node.left
                 is_left_child = True
                 self._decrement()
             else:
                 self._increment()
-                self._print("Key: {} is greater then key: {}. Traversing Right".format(
+                self.trace("Key: {} is greater then key: {}. Traversing Right".format(
                     key, key_at_node))
                 is_left_child = False
                 node = node.right
@@ -52,18 +52,18 @@ class BST:
         node = Node(key, value)
         if parent is None:
             self._increment()
-            self._print("Inserting at root: {}".format((key, value)))
+            self.trace("Inserting at root: {}".format((key, value)))
             self.root = node
             self._decrement()
         elif is_left_child:
             self._increment()
-            self._print("Inserting at left: {} of parent: {}".format(
+            self.trace("Inserting at left: {} of parent: {}".format(
                 (key, value), parent.key))
             parent.left = node
             self._decrement()
         else:
             self._increment()
-            self._print("Inserting at right: {} of parent: {}".format(
+            self.trace("Inserting at right: {} of parent: {}".format(
                 (key, value), parent.key))
             parent.right = node
             self._decrement()
@@ -71,55 +71,124 @@ class BST:
 
     def get(self, key):
         self._increment()
-        self._print("Looking for value of key: {}".format(key))
+        self.trace("Looking for value of key: {}".format(key))
         node = self.root
         value = None
         while node is not None:
             self._increment()
-            self._print(str(node.key))
+            self.trace(str(node.key))
             if key == node.key:
                 value = node.value
                 self._decrement()
                 break
             if key < node.key:
-                self._print("Left...")
+                self.trace("Left...")
                 node = node.left
                 self._decrement()
                 continue
             if key > node.key:
-                self._print("Right...")
+                self.trace("Right...")
                 node = node.right
             self._decrement()
         self._decrement()
         if value is not None:
-            self._print("Value for key: {} is {}".format(key, value))
+            self.trace("Value for key: {} is {}".format(key, value))
         else:
-            self._print(
+            self.trace(
                 "Value for key: {} is not present in subtree".format(key))
 
     def delete(self, key):
         self._increment()
-        self._print("Deleting key: {}".format(key))
+        self.trace("Deleting key: {}".format(key))
+        parent = None
         node = self.root
+        key_present = False
         while node != None:
             node_key = node.key
             if key == node_key:
-                self._print(
+                self.trace(
                     "key {} is equal to node key: {}".format(key, node_key))
-                pass
+                key_present = True
+                self.delete_node(parent, node)
+                break
             elif key < node_key:
-                self._print(
+                self.trace(
                     "key {} is less to node key: {}".format(key, node_key))
-                self._print("Moving to left subtree...")
+                self.trace("Moving to left subtree...")
+                parent = node
+                node = node.left
             else:
-                self._print(
+                self.trace(
                     "key {} is greater to node key: {}".format(key, node_key))
-                self._print("Moving to right subtree...")
-                pass
-            break
+                self.trace("Moving to right subtree...")
+                parent = node
+                node = node.right
+        if not key_present:
+            self.trace("Key not present in Tree")
+        self.dump_tree()
         self._decrement()
 
-    def _print(self, message):
+    def delete_node(self, parent, node):
+        self._increment()
+        if parent == None:
+            self.trace("Need to delete root element")
+            successor = self.get_successor(node)
+            self.delete(successor.key)
+            successor.left = node.left
+            successor.right = node.right
+            self.root = successor
+            return
+
+        self.trace("Deleting Node: {} from parent: {}".format(
+            node.key, parent.key))
+        is_left_child = False
+        if node.key == parent.left.key:
+            is_left_child = True
+        self.trace("Is left Child: {}".format(is_left_child))
+
+        # No child
+        if node.left == None and node.right == None:
+            self.trace("The Node has no children: {}".format(is_left_child))
+            self.append_node_to_parent(parent, None, is_left_child)
+            return
+
+        # if only left child
+        if node.right == None:
+            self.append_node_to_parent(parent, node.left, is_left_child)
+            return
+
+        # If only right child
+        if node.left == None:
+            self.append_node_to_parent(parent, node.right, is_left_child)
+            return
+
+        # If both child
+        # Get Successor
+        successor = self.get_successor(node)
+        self.delete(successor.key)
+        successor.left = node.left
+        successor.right = node.right
+        self.append_node_to_parent(parent, successor, is_left_child)
+        self._decrement()
+
+    def append_node_to_parent(self, parent, node, is_left_child):
+        if is_left_child:
+            parent.left = node
+        else:
+            parent.right = node
+
+    def get_successor(self, node):
+        self._increment()
+        right = node.right
+        successor = right
+        next_node = right.left
+        while next_node is not None:
+            successor = next_node
+            next_node = next_node.left
+        self._decrement()
+        return successor
+
+    def trace(self, message):
         seperator = self.seperator * self.tab_size
         message = seperator + message
         print(message)
@@ -169,4 +238,4 @@ if __name__ == "__main__":
     # bst.get(9)
     # # print(val)
 
-    bst.delete(5)
+    bst.delete(92)
