@@ -20,16 +20,24 @@ class BST:
 
     def insert(self, key, value):
         self._increment()
-        self._print("BST - Inserting Value: {}".format(value))
+        self._print("BST - Inserting key, Value: {}".format((key, value)))
         node = self.root
         parent = None
         is_left_child = True
         while node is not None:
             key_at_node = node.key
             parent = node
-            if key <= key_at_node:
+            if key == key_at_node:
                 self._increment()
-                self._print("Key: {} is less then or equal to key: {}. Traversing Left".format(
+                self._print("Key is present in the tree, updating from earlier: {} to {}...".format(
+                    (node.key, node.value), (node.key, value)))
+                node.value = value
+                self._decrement()
+                self._decrement()
+                return
+            elif key < key_at_node:
+                self._increment()
+                self._print("Key: {} is less then key: {}. Traversing Left".format(
                     key, key_at_node))
                 node = node.left
                 is_left_child = True
@@ -83,7 +91,11 @@ class BST:
                 node = node.right
             self._decrement()
         self._decrement()
-        return value
+        if value is not None:
+            self._print("Value for key: {} is {}".format(key, value))
+        else:
+            self._print(
+                "Value for key: {} is not present in subtree".format(key))
 
     def delete(self, key):
         self._increment()
@@ -98,10 +110,11 @@ class BST:
             elif key < node_key:
                 self._print(
                     "key {} is less to node key: {}".format(key, node_key))
-                pass
+                self._print("Moving to left subtree...")
             else:
                 self._print(
                     "key {} is greater to node key: {}".format(key, node_key))
+                self._print("Moving to right subtree...")
                 pass
             break
         self._decrement()
@@ -143,12 +156,17 @@ if __name__ == "__main__":
     bst = BST()
 
     seed(20)
-    arr = [randint(0, 100) for _ in range(31)]
-    for ele in arr:
-        bst.insert(ele, None)
+    ele_count = 100
+    req_size = 31
+    while ele_count > 0:
+        ele_count -= 1
+        ele = randint(0, 100)
+        val = chr(ord("a") + randint(0, 25))
+        bst.insert(ele, val)
     bst.print_tree()
 
-    val = bst.get(22)
-    print(val)
+    bst.get(22)
+    bst.get(9)
+    # print(val)
 
     bst.delete(5)
