@@ -1,4 +1,5 @@
 import json
+from random import randint, seed
 
 
 class Node:
@@ -66,20 +67,49 @@ class BST:
         node = self.root
         value = None
         while node is not None:
+            self._increment()
+            self._print(str(node.key))
             if key == node.key:
                 value = node.value
+                self._decrement()
                 break
             if key < node.key:
+                self._print("Left...")
                 node = node.left
+                self._decrement()
+                continue
             if key > node.key:
+                self._print("Right...")
                 node = node.right
+            self._decrement()
         self._decrement()
         return value
+
+    def delete(self, key):
+        self._increment()
+        self._print("Deleting key: {}".format(key))
+        node = self.root
+        while node != None:
+            node_key = node.key
+            if key == node_key:
+                self._print(
+                    "key {} is equal to node key: {}".format(key, node_key))
+                pass
+            elif key < node_key:
+                self._print(
+                    "key {} is less to node key: {}".format(key, node_key))
+                pass
+            else:
+                self._print(
+                    "key {} is greater to node key: {}".format(key, node_key))
+                pass
+            break
+        self._decrement()
 
     def _print(self, message):
         seperator = self.seperator * self.tab_size
         message = seperator + message
-        # print(message)
+        print(message)
 
     def _increment(self):
         self.tab_size += 1
@@ -92,12 +122,15 @@ class BST:
         my_tree = {}
         space = 0
         self.print_node(node, my_tree, space)
-        print(json.dumps(my_tree, indent=2))
+        fn = "{}_tree.json".format(__file__.split(".")[0])
+        with open(fn, "w") as f:
+            json.dump(my_tree, f, indent=2)
 
     def print_node(self, node, my_tree, space):
         if node is None:
             return
-        my_tree["ele"] = ": ".join([str(node.key), str(node.value)])
+        my_tree["key"] = node.key
+        my_tree["value"] = node.value
         if node.left is not None:
             my_tree["L"] = {}
             self.print_node(node.left, my_tree["L"], space)
@@ -108,12 +141,14 @@ class BST:
 
 if __name__ == "__main__":
     bst = BST()
-    bst.insert(8, "a")
-    bst.insert(12, "c")
-    bst.insert(10, "d")
-    bst.insert(5, "s")
-    bst.insert(15, "e")
+
+    seed(20)
+    arr = [randint(0, 100) for _ in range(31)]
+    for ele in arr:
+        bst.insert(ele, None)
     bst.print_tree()
 
     val = bst.get(22)
     print(val)
+
+    bst.delete(5)
