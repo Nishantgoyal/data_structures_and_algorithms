@@ -126,8 +126,16 @@ class Node:
 
         if self.key_right is not None:
             str_to_print = "({} R:{})".format(str_to_print, self.key_right)
-        if self.parent is not None:
-            str_to_print = "P: ({}) --> {}".format(self.parent, str_to_print)
+
+        if self.tree_left is not None:
+            str_to_print = "{} :: LT: {}".format(str_to_print, self.tree_left)
+
+        if self.tree_mid is not None:
+            str_to_print = "{} :: MT: {}".format(str_to_print, self.tree_mid)
+
+        if self.tree_right is not None:
+            str_to_print = "{} :: RT: {}".format(str_to_print, self.tree_right)
+
         return str_to_print
 
 
@@ -137,7 +145,7 @@ class Tree:
         self.root = None
 
     def insert(self, key, node=None):
-        print("\nInserting key: {}".format(key))
+        print("Inserting key: {}".format(key))
         if self.root == None:
             print("Inserting root element...")
             self.root = Node(key)
@@ -200,11 +208,27 @@ class Tree:
 
 if __name__ == "__main__":
     tree = Tree()
+
+    print()
     tree.insert(14)
-    tree.insert(4)
+
+    print()
+    tree.insert(2)
+
+    print()
     tree.insert(8)
+
+    print()
     tree.insert(6)
-    tree.dump_tree()
+
+    print()
+    tree.insert(26)
+
+    print()
+    tree.insert(5)
+
+    print("\nTree: \n{}".format(tree.root))
+    # tree.dump_tree()
     # seed(20)
     # ele_count = 1
     # while ele_count > 0:
