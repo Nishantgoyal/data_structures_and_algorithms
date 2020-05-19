@@ -44,25 +44,83 @@ class Node:
         print("Final 3 tree is: {}".format(str(self)))
 
     def split_node(self, key):
+
         if key < self.key_left:
             node1 = Node(key)
+            if self.tree_left is not None:
+                if self.tree_left.key_left < key:
+                    node1.tree_left = self.tree_left
+                else:
+                    node1.tree_right = self.tree_left
             mid = self.key_left
             node2 = Node(self.key_right)
+            if self.tree_mid is not None:
+                node2.tree_left = self.tree_mid
+            if self.tree_right is not None:
+                node2.tree_right = self.tree_right
+
         elif key > self.key_left and key < self.key_right:
             node1 = Node(self.key_left)
+            if self.tree_left is not None:
+                node1.tree_left = self.tree_left
             mid = key
             node2 = Node(self.key_right)
+            if self.tree_mid is not None:
+                if self.tree_mid.key_left < key:
+                    node1.tree_right = self.tree_mid
+                else:
+                    node2.tree_left = self.tree_mid
+            if self.tree_right is not None:
+                node2.tree_right = self.tree_right
+
         elif key > self.key_right:
             node1 = Node(self.key_left)
+            if self.tree_left is not None:
+                node1.tree_left = self.tree_left
+            if self.tree_mid is not None:
+                node1.tree_right = self.tree_mid
             mid = self.key_right
             node2 = Node(key)
+            if self.tree_right is not None:
+                if self.tree_right.key_left < key:
+                    node2.tree_left = self.tree_right
+                else:
+                    node2.tree_right = self.tree_right
         return (node1, mid, node2)
 
-    def __repr__(self):
-        if self.key_right:
-            return "({}-{})".format(self.key_left, self.key_right)
+    def insert_key(self, key):
+        print("Inserting key: {} in Node: {}".format(key, self))
+        if self.is_3_tree():
+            print("Node: {} is 3 tree".format(self))
+            (node1, mid, node2) = self.split_node(key)
+            print("Node split: {} {} {}".format(node1, mid, node2))
+            if self.parent is None:
+                print("Node: {} parent is None".format(self))
+                node = Node(mid)
+                print("Created Node: {}".format(node))
+                node.tree_left = node1
+                # print("Created Node: Left {}".format(node.tree_left))
+                node.tree_right = node2
+                node1.parent = node
+                node2.parent = node
+                return node
+            else:
+                self.parent = self.parent.insert_key(key)
+                return self
+
         else:
-            return "({})".format(self.key_left)
+            print("Node: {} is 2 tree")
+            self.make_3_tree(key)
+            return self
+
+    def __repr__(self):
+        str_to_print = "L:{}".format(self.key_left)
+
+        if self.key_right is not None:
+            str_to_print = "({} R:{})".format(str_to_print, self.key_right)
+        if self.parent is not None:
+            str_to_print = "P: ({}) --> {}".format(self.parent, str_to_print)
+        return str_to_print
 
 
 class Tree:
@@ -71,74 +129,44 @@ class Tree:
         self.root = None
 
     def insert(self, key):
-        print("Inserting key: {}".format(key))
+        print("\nInserting key: {}".format(key))
+        if self.root == None:
+            print("Inserting root element...")
+            self.root = Node(key)
         node = self.root
-        print(node)
         if node.has_child():
-            (node, traverse) = node.traverse()
+            print("Node has child...")
+            (node, traverse) = node.traverse(key)
             if traverse is False:
                 print("Key already present")
                 return
         else:
-            pass
-        # if node.is_3_tree():
-        #     # 3 - Tree
-        #     print("3-tree")
-        #     node_key_left = node.key_left
-        #     node_key_right = node.key_right
-        #     if not node.has_child():
-        #         print("Empty 3 tree")
-        #         while parent is not None:
-        #             (node1, mid, node2) = node.split_node(key)
-        #             if parent.is_2_tree():
-        #                 parent.make_3_tree(key)
-        #             # else:
-        #     else:
-        #         print("Traversing tree")
-        #         if key < node.key_left:
-        #             node = node.tree_left
-        #         elif key > node.key_left and key < node.key_right:
-        #             node = node.tree_mid
-        #         elif key > node.key_right:
-        #             node = node.tree_right
-        # else:
-        #     # 2 - Tree
-        #     print("2-tree")
-        #     node_key_left = node.key_left
-        #     if not node.has_child():
-        #         print("Empty tree")
-        #         node.make_3_tree(key)
-        #         return
-        #     else:
-        #         print("Traversing tree")
-        #         if key < node.key_left:
-        #             node = node.tree_left
-        #         elif key > node.key_left:
-        #             node = node.tree_right
-
-        # if parent is None:
-        #     self.root = Node(key)
-        # # self.dump_tree()
+            print("Node is leaf...")
+            parent = node.parent
+            if parent is None:
+                self.root = node.insert_key(key)
+            else:
+                pass
 
     def dump_tree(self):
         with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:
             json_list = {}
+            print("Calling Print Tree")
             self.print_tree(self.root, json_list)
             json.dump(json_list, fn, indent=4)
 
     def print_tree(self, node, json_list):
-
+        print(node)
         json_list["node"] = str(node)
-        # json_list["value"] = str(node.value)
         if node.tree_left:
             json_list["left"] = {}
-            node.print_tree(node.tree_left, json_list["left"])
+            self.print_tree(node.tree_left, json_list["left"])
         if node.tree_mid:
             json_list["mid"] = {}
-            node.print_tree(node.tree_mid, json_list["mid"])
+            self.print_tree(node.tree_mid, json_list["mid"])
         if node.tree_right:
             json_list["right"] = {}
-            node.print_tree(node.tree_right, json_list["right"])
+            self.print_tree(node.tree_right, json_list["right"])
 
 
 if __name__ == "__main__":
