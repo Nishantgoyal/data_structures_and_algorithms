@@ -20,19 +20,27 @@ class Node:
         return self.tree_left is not None or self.tree_mid is not None or self.tree_right is not None
 
     def traverse(self, key):
+        print("Traversing...")
         if self.key_left and key < self.key_left:
-            return (self.tree_left, True)
+            print("To Left: {}".format(self.tree_left))
+            return (-1, True)
         if self.key_left and key == self.key_left:
-            return (self, False)
-        if self.key_left and key > self.key_right:
+            print("Found: {}".format(self))
+            return (0, False)
+        if self.key_left and key > self.key_left:
             if not self.key_right:
-                return (self.tree_right, True)
+                print("To Right: {}".format(self.tree_right))
+                return (1, True)
             else:
                 if key < self.key_right:
-                    return (self.tree_mid, True)
+                    print("To Mid: {}".format(self.tree_mid))
+                    return (0, True)
                 if key == self.key_right:
+                    print("Found: {}".format(self))
                     return (self, False)
-                return (self.tree_right, True)
+                if key > self.key_right:
+                    print("To Right: {}".format(self.tree_mid))
+                    return (1, True)
 
     def make_3_tree(self, key):
         print("Making 3 tree from: {} with key:{} ".format(str(self), key))
@@ -109,7 +117,7 @@ class Node:
                 return self
 
         else:
-            print("Node: {} is 2 tree")
+            print("Node: {} is 2 tree".format(self))
             self.make_3_tree(key)
             return self
 
@@ -128,25 +136,46 @@ class Tree:
     def __init__(self):
         self.root = None
 
-    def insert(self, key):
+    def insert(self, key, node=None):
         print("\nInserting key: {}".format(key))
         if self.root == None:
             print("Inserting root element...")
             self.root = Node(key)
-        node = self.root
+        if node is None:
+            node = self.root
         if node.has_child():
-            print("Node has child...")
-            (node, traverse) = node.traverse(key)
+            print("Node: {} has child...".format(node))
+            (direction, traverse) = node.traverse(key)
             if traverse is False:
                 print("Key already present")
                 return
+            else:
+                if direction == -1:
+                    self.insert(key, node.tree_left)
+                elif direction == 0:
+                    if node.tree_mid is not None:
+                        self.insert(key, node.tree_mid)
+                    else:
+                        node.tree_mid = Node(key)
+                        node.tree_mid.parent = node
+                else:
+                    if node.tree_right is not None:
+                        self.insert(key, node.tree_right)
+                    else:
+                        node.tree_right = Node(key)
+                        node.tree_right.parent = node
         else:
             print("Node is leaf...")
             parent = node.parent
             if parent is None:
                 self.root = node.insert_key(key)
             else:
-                pass
+                if node is parent.tree_left:
+                    parent.tree_left = node.insert_key(key)
+                elif node is parent.tree_mid:
+                    parent.tree_mid = node.insert_key(key)
+                elif node is parent.tree_right:
+                    parent.tree_right = node.insert_key(key)
 
     def dump_tree(self):
         with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:
@@ -174,6 +203,7 @@ if __name__ == "__main__":
     tree.insert(14)
     tree.insert(4)
     tree.insert(8)
+    tree.insert(6)
     tree.dump_tree()
     # seed(20)
     # ele_count = 1
