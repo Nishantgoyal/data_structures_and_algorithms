@@ -4,13 +4,14 @@ from random import randint, seed
 
 class TwoNode:
     def __init__(self, key):
+        print("Creating a Two Node with key: {}".format(key))
         self.parent = None
         self.key_left = key
         self.tree_left = None
         self.tree_right = None
 
-    def is_3_tree(self):
-        return False
+    def node_type(self):
+        return 2
 
     def has_child(self):
         return self.tree_left is not None or self.tree_right is not None

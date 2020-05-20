@@ -1,17 +1,28 @@
 import json
 from random import randint, seed
 
+from two_node import TwoNode
+from three_node import ThreeNode
+
 
 class TwoThreeTree:
 
     def __init__(self):
         self.root = None
 
-    # def insert(self, key, node=None):
-    #     print("Inserting key: {}".format(key))
-    #     if self.root == None:
-    #         print("Inserting root element...")
-    #         self.root = Node(key)
+    def insert(self, key, node=None):
+        '''
+            inserts a key into the TwoThreeTree
+            Case 1:
+                tree is empty
+                -> make 2 two_node with the key
+                -> set the root point to the two node
+        '''
+        pass
+        print("Inserting key: {}".format(key))
+        if self.root == None:
+            print("Inserting root element...")
+            self.root = TwoNode(key)
     #     if node is None:
     #         node = self.root
     #     if node.has_child():
@@ -82,22 +93,24 @@ class TwoThreeTree:
     #         node.make_3_tree(key)
     #         return node
 
-    # def dump_tree(self):
-    #     with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:
-    #         json_list = {}
-    #         print("Calling Print TwoThreeTree")
-    #         self.print_tree(self.root, json_list)
-    #         json.dump(json_list, fn, indent=4)
+    def dump_tree(self):
+        with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:
+            json_list = {}
+            if self.root is not None:
+                # print("Calling PrintTree")
+                self.print_tree(self.root, json_list)
+            json.dump(json_list, fn, indent=4)
 
-    # def print_tree(self, node, json_list):
-    #     print(node)
-    #     json_list["node"] = str(node)
-    #     if node.tree_left:
-    #         json_list["left"] = {}
-    #         self.print_tree(node.tree_left, json_list["left"])
-    #     if node.tree_mid:
-    #         json_list["mid"] = {}
-    #         self.print_tree(node.tree_mid, json_list["mid"])
-    #     if node.tree_right:
-    #         json_list["right"] = {}
-    #         self.print_tree(node.tree_right, json_list["right"])
+    def print_tree(self, node, json_list):
+        # print(node)
+        json_list["node"] = str(node)
+        if node.tree_left:
+            json_list["left"] = {}
+            # self.print_tree(node.tree_left, json_list["left"])
+        if node.tree_right:
+            json_list["right"] = {}
+            # self.print_tree(node.tree_right, json_list["right"])
+        if node.node_type == 3:
+            if node.tree_mid:
+                json_list["mid"] = {}
+                # self.print_tree(node.tree_mid, json_list["mid"])

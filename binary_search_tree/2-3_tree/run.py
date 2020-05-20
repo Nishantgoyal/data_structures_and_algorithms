@@ -7,7 +7,7 @@ def main():
     tree = TwoThreeTree()
 
     # print()
-    # tree.insert(14)
+    tree.insert(14)
 
     # print()
     # tree.insert(2)
@@ -24,8 +24,8 @@ def main():
     # print()
     # tree.insert(5)
 
-    # print("\nTree: \n{}".format(tree.root))
-    # # tree.dump_tree()
+    print("\nTree: {}".format(tree.root))
+    tree.dump_tree()
     # # seed(20)
     # # ele_count = 1
     # # while ele_count > 0:

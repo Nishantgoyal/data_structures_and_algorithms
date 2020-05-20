@@ -2,7 +2,7 @@ import json
 from random import randint, seed
 
 
-class Node:
+class ThreeNode:
     def __init__(self, key1, key2):
         self.parent = None
         self.key_left = key1
@@ -11,8 +11,8 @@ class Node:
         self.tree_mid = None
         self.tree_right = None
 
-    def is_three_tree(self):
-        return True
+    def node_type(self):
+        return 3
 
     def has_child(self):
         return self.tree_left is not None or self.tree_mid is not None or self.tree_right is not None
