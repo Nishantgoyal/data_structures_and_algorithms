@@ -19,13 +19,13 @@ class TwoNode:
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)
         print("Traversing Node: {}".format(self))
-        if self.key_left and key < self.key_left:
+        if key < self.key_left:
             print("To Left: {}".format(self.tree_left))
             return (-1, True)
-        if self.key_left and key == self.key_left:
+        if key == self.key_left:
             print("Found: {}".format(self))
             return (0, False)
-        if self.key_left and key > self.key_left:
+        if key > self.key_left:
             print("To Right: {}".format(self.tree_right))
             return (1, True)
 
