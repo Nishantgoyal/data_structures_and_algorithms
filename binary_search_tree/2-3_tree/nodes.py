@@ -16,10 +16,16 @@ class TwoNode:
     def has_child(self):
         return self.tree_left is not None or self.tree_right is not None
 
+    def append_child(self, node, new_node):
+        if node is self.tree_left:
+            self.tree_left = new_node
+        elif node is self.tree_right:
+            self.tree_right = new_node
+
     def traverse(self, key):
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)
-        print("Traversing Node: {}".format(self))
+        print("Traversing a two node: {}...".format(self))
         if key < self.key:
             print("To Left: {}".format(self.tree_left))
             return (-1, True)
@@ -61,10 +67,18 @@ class ThreeNode:
     def has_child(self):
         return self.tree_left is not None or self.tree_mid is not None or self.tree_right is not None
 
+    def append_child(self, node, new_node):
+        if node is self.tree_left:
+            self.tree_left = new_node
+        elif node is self.tree_mid:
+            self.tree_mid = new_node
+        elif node is self.tree_right:
+            self.tree_right = new_node
+
     def traverse(self, key):
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)
-        print("Traversing...")
+        print("Traversing a three node: {}...".format(self))
         if key < self.key_left:
             print("To Left: {}".format(self.tree_left))
             return (-1, True)
@@ -77,7 +91,7 @@ class ThreeNode:
                 return (0, True)
             if key == self.key_right:
                 print("Found: {}".format(self))
-                return (self, False)
+                return (0, False)
             if key > self.key_right:
                 print("To Right: {}".format(self.tree_mid))
                 return (1, True)

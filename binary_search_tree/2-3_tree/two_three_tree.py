@@ -9,7 +9,7 @@ class TwoThreeTree:
     def __init__(self):
         self.root = None
 
-    def insert(self, key):
+    def insert(self, key, node=None):
         '''
             inserts a key into the TwoThreeTree
             Case 1:
@@ -40,19 +40,18 @@ class TwoThreeTree:
             print("Inserting root element...")
             self.root = TwoNode(key)
             return
-        node = self.root
+        if node is None:
+            node = self.root
         if node.has_child():
             print("Node: {} has child...".format(node))
-    #         (direction, traverse) = node.traverse(key)
-    #         if traverse is False:
-    #             print("Key already present")
-    #             return
-    #         else:
-    #             if direction == -1:
-    #                 # Insert in left tree
-    #                 if node.tree_left is not None:
-    #                     self.insert(key, node.tree_left)
-    #                 else:
+            (direction, traverse) = node.traverse(key)
+            if traverse:
+                if direction == -1:
+                    # Insert in left tree
+                    if node.tree_left is not None:
+                        self.insert(key, node.tree_left)
+                    else:
+                        pass
     #                     node.tree_left = Node(key)
     #                     node.tree_left.parent = node
     #             elif direction == 0:
@@ -68,14 +67,21 @@ class TwoThreeTree:
     #                 else:
     #                     node.tree_right = Node(key)
     #                     node.tree_right.parent = node
+            else:
+                print("Key already present")
+                return
         else:
             print("Node: {} is leaf...".format(node))
             if node.node_type() == 2:
                 print("Node: {} is two tree...".format(node))
                 print("Making node: {} a three tree...".format(node))
                 new_node = node.make_three_tree(key)
+                print("New Node: {}".format(new_node))
                 if node.parent is None:
+                    print("Node: {} parent is None".format(node))
                     self.root = new_node
+                else:
+                    node.parent.append_child(node, new_node)
             else:
                 print("Node: {} is three tree...".format(node))
                 print("Splitting node: {}...".format(node))
@@ -86,6 +92,8 @@ class TwoThreeTree:
                     self.root = TwoNode(mid)
                     self.root.tree_left = node1
                     self.root.tree_right = node2
+                    node1.parent = self.root
+                    node2.parent = self.root
     #         parent = node.parent
     #         if parent is None:
     #             self.root = self.insert_key(key, node)
