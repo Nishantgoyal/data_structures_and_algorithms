@@ -94,6 +94,7 @@ class Node:
                     node2.tree_left = self.tree_right
                 else:
                     node2.tree_right = self.tree_right
+
         return (node1, mid, node2)
 
     def insert_key(self, key):
@@ -159,8 +160,14 @@ class Tree:
                 return
             else:
                 if direction == -1:
-                    self.insert(key, node.tree_left)
+                    # Insert in left tree
+                    if node.tree_left is not None:
+                        self.insert(key, node.tree_left)
+                    else:
+                        node.tree_left = Node(key)
+                        node.tree_left.parent = node
                 elif direction == 0:
+                    # Insert in mid tree
                     if node.tree_mid is not None:
                         self.insert(key, node.tree_mid)
                     else:
