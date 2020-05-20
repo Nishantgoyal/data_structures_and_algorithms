@@ -3,9 +3,9 @@ from random import randint, seed
 
 
 class TwoNode:
-    def __init__(self, key):
+    def __init__(self, key, parent=None):
         print("Creating a Two Node with key: {}".format(key))
-        self.parent = None
+        self.parent = parent
         self.key = key
         self.tree_left = None
         self.tree_right = None
@@ -79,8 +79,8 @@ class TwoNode:
 
 
 class ThreeNode:
-    def __init__(self, key1, key2):
-        self.parent = None
+    def __init__(self, key1, key2, parent=None):
+        self.parent = parent
         self.key_left = key1
         self.key_right = key2
         self.tree_left = None
