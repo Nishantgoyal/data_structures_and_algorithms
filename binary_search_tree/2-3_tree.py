@@ -97,31 +97,6 @@ class Node:
 
         return (node1, mid, node2)
 
-    def insert_key(self, key):
-        print("Inserting key: {} in Node: {}".format(key, self))
-        if self.is_3_tree():
-            print("Node: {} is 3 tree".format(self))
-            (node1, mid, node2) = self.split_node(key)
-            print("Node split: {} {} {}".format(node1, mid, node2))
-            if self.parent is None:
-                print("Node: {} parent is None".format(self))
-                node = Node(mid)
-                print("Created Node: {}".format(node))
-                node.tree_left = node1
-                # print("Created Node: Left {}".format(node.tree_left))
-                node.tree_right = node2
-                node1.parent = node
-                node2.parent = node
-                return node
-            else:
-                self.parent = self.parent.insert_key(key)
-                return self
-
-        else:
-            print("Node: {} is 2 tree".format(self))
-            self.make_3_tree(key)
-            return self
-
     def __repr__(self):
         str_to_print = "L:{}".format(self.key_left)
 
@@ -183,14 +158,38 @@ class Tree:
             print("Node is leaf...")
             parent = node.parent
             if parent is None:
-                self.root = node.insert_key(key)
+                self.root = self.insert_key(key, node)
             else:
                 if node is parent.tree_left:
-                    parent.tree_left = node.insert_key(key)
+                    parent.tree_left = self.insert_key(key, node)
                 elif node is parent.tree_mid:
-                    parent.tree_mid = node.insert_key(key)
+                    parent.tree_mid = self.insert_key(key, node)
                 elif node is parent.tree_right:
-                    parent.tree_right = node.insert_key(key)
+                    parent.tree_right = self.insert_key(key, node)
+
+    def insert_key(self, node, key, node1=None, node2=None):
+        print("Inserting key: {} in Node: {}".format(key, node))
+        if node.is_3_tree():
+            print("Node: {} is 3 tree".format(node))
+            (node1, mid, node2) = node.split_node(key)
+            print("Node split: {} {} {}".format(node1, mid, node2))
+            if node.parent is None:
+                print("Node: {} parent is None".format(node))
+                node = Node(mid)
+                print("Created Node: {}".format(node))
+                node.tree_left = node1
+                node.tree_right = node2
+                node1.parent = node
+                node2.parent = node
+                return node
+            else:
+                node.parent = node.parent.insert_key(key)
+                return node
+
+        else:
+            print("Node: {} is 2 tree".format(node))
+            node.make_3_tree(key)
+            return node
 
     def dump_tree(self):
         with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:
