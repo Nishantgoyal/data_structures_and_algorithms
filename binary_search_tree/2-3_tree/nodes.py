@@ -16,6 +16,14 @@ class TwoNode:
     def has_child(self):
         return self.tree_left is not None or self.tree_right is not None
 
+    def add_left_child(self, node):
+        self.tree_left = node
+        node.parent = self
+
+    def add_right_child(self, node):
+        self.tree_right = node
+        node.parent = self
+
     def append_child(self, node, new_node):
         if node is self.tree_left:
             self.tree_left = new_node
@@ -36,15 +44,33 @@ class TwoNode:
             print("To Right: {}".format(self.tree_right))
             return (1, True)
 
-    def make_three_tree(self, key):
+    def make_three_node(self, key):
         if key < self.key:
             three_node = ThreeNode(key, self.key)
         elif key > self.key:
             three_node = ThreeNode(self.key, key)
+        # if self.tree_left:
+        #     if self.tree_left.node_type == 2:
+        #         child_key = self.tree_left.key
+        #         if child_key < three_node.key_left:
+        #             three_node.tree_left = self.tree_left
+        #         else:
+        #             three_node.add_to_mid_tree(self.tree_left)
+        # if self.tree_right:
+        #     if self.tree_right.node_type == 2:
+        #         child_key = self.tree_right.key
+        #         if child_key > three_node.key_right:
+        #             three_node.tree_right = self.tree_right
+        #         else:
+        #             three_node.add_to_mid_tree(self.tree_right)
         return three_node
 
+    def insert_key(self, key):
+        print("Inserting key into a two node: {}".format(self))
+        return self.make_three_node(key)
+
     def __repr__(self):
-        str_to_print = "L:{}".format(self.key)
+        str_to_print = "(L:{})".format(self.key)
         if self.tree_left is not None:
             str_to_print = "{} :: LT: {}".format(str_to_print, self.tree_left)
         if self.tree_right is not None:
@@ -66,6 +92,18 @@ class ThreeNode:
 
     def has_child(self):
         return self.tree_left is not None or self.tree_mid is not None or self.tree_right is not None
+
+    def add_left_child(self, node):
+        self.tree_left = node
+        node.parent = self
+
+    def add_right_child(self, node):
+        self.tree_right = node
+        node.parent = self
+
+    def add_mid_child(self, node):
+        self.tree_mid = node
+        node.parent = self
 
     def append_child(self, node, new_node):
         if node is self.tree_left:
@@ -105,6 +143,9 @@ class ThreeNode:
                 return (TwoNode(self.key_left), key, TwoNode(self.key_right))
             elif key > self.key_right:
                 return (TwoNode(self.key_left), self.key_right, TwoNode(key))
+
+    def insert_key(self, key):
+        pass
 
     def __repr__(self):
         str_to_print = "(L:{} R:{})".format(self.key_left, self.key_right)

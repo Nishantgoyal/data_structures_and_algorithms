@@ -51,24 +51,21 @@ class TwoThreeTree:
                     if node.tree_left is not None:
                         self.insert(key, node.tree_left)
                     else:
-                        pass
-    #                     node.tree_left = Node(key)
-    #                     node.tree_left.parent = node
+                        node.tree_left = TwoNode(key)
+                        node.tree_left.parent = node
                 elif direction == 0:
                     # Insert in mid tree
                     if node.tree_mid is not None:
                         self.insert(key, node.tree_mid)
                     else:
-                        pass
-    #                     node.tree_mid = Node(key)
-    #                     node.tree_mid.parent = node
+                        node.tree_mid = TwoNode(key)
+                        node.tree_mid.parent = node
                 else:
                     if node.tree_right is not None:
                         self.insert(key, node.tree_right)
                     else:
-                        pass
-    #                     node.tree_right = Node(key)
-    #                     node.tree_right.parent = node
+                        node.tree_right = TwoNode(key)
+                        node.tree_right.parent = node
             else:
                 print("Key already present")
                 return
@@ -77,26 +74,33 @@ class TwoThreeTree:
             if node.node_type() == 2:
                 print("Node: {} is two tree...".format(node))
                 print("Making node: {} a three tree...".format(node))
-                new_node = node.make_three_tree(key)
+                new_node = node.make_three_node(key)
                 print("New Node: {}".format(new_node))
                 if node.parent is None:
                     print("Node: {} parent is None".format(node))
                     self.root = new_node
                 else:
+                    new_node.parent = node
                     node.parent.append_child(node, new_node)
             else:
                 print("Node: {} is three tree...".format(node))
+                print("Parent of node: {} is: {}".format(node, node.parent))
                 print("Splitting node: {}...".format(node))
                 (node1, mid, node2) = node.split_node(key)
                 print(
                     "Splitted the node: {} into: {} - {} - {}".format(node, node1, mid, node2))
                 if node.parent is None:
+                    print("Node:{} parent is None".format(node))
                     self.root = TwoNode(mid)
                     self.root.tree_left = node1
                     self.root.tree_right = node2
                     node1.parent = self.root
                     node2.parent = self.root
-    #         parent = node.parent
+                else:
+                    print("Inserting {} into {}".format(mid, node.parent))
+                    node.parent.insert_key(key)
+                    # print(" {} into {}".format(mid, node.parent))
+                    # parent = node.parent
     #         if parent is None:
     #             self.root = self.insert_key(key, node)
     #         else:

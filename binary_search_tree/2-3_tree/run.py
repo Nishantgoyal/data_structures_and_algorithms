@@ -21,8 +21,10 @@ def main():
     print()
     tree.insert(26)
 
-    # print()
-    # tree.insert(5)
+    print("\nTree: {}".format(tree.root))
+    tree.dump_tree()
+    print()
+    tree.insert(5)
 
     print("\nTree: {}".format(tree.root))
     tree.dump_tree()
