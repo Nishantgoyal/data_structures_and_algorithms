@@ -18,8 +18,8 @@ def main():
     print()
     tree.insert(6)
 
-    # print()
-    # tree.insert(26)
+    print()
+    tree.insert(26)
 
     # print()
     # tree.insert(5)

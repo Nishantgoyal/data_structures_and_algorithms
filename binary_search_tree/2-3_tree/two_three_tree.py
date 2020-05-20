@@ -54,17 +54,19 @@ class TwoThreeTree:
                         pass
     #                     node.tree_left = Node(key)
     #                     node.tree_left.parent = node
-    #             elif direction == 0:
-    #                 # Insert in mid tree
-    #                 if node.tree_mid is not None:
-    #                     self.insert(key, node.tree_mid)
-    #                 else:
+                elif direction == 0:
+                    # Insert in mid tree
+                    if node.tree_mid is not None:
+                        self.insert(key, node.tree_mid)
+                    else:
+                        pass
     #                     node.tree_mid = Node(key)
     #                     node.tree_mid.parent = node
-    #             else:
-    #                 if node.tree_right is not None:
-    #                     self.insert(key, node.tree_right)
-    #                 else:
+                else:
+                    if node.tree_right is not None:
+                        self.insert(key, node.tree_right)
+                    else:
+                        pass
     #                     node.tree_right = Node(key)
     #                     node.tree_right.parent = node
             else:
