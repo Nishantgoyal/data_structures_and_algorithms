@@ -51,21 +51,18 @@ class TwoThreeTree:
                     if node.tree_left is not None:
                         self.insert(key, node.tree_left)
                     else:
-                        node.tree_left = TwoNode(key)
-                        node.tree_left.parent = node
+                        node.add_left_child(TwoNode(key))
                 elif direction == 0:
                     # Insert in mid tree
                     if node.tree_mid is not None:
                         self.insert(key, node.tree_mid)
                     else:
-                        node.tree_mid = TwoNode(key)
-                        node.tree_mid.parent = node
+                        node.add_mid_child(TwoNode(key))
                 else:
                     if node.tree_right is not None:
                         self.insert(key, node.tree_right)
                     else:
-                        node.tree_right = TwoNode(key)
-                        node.tree_right.parent = node
+                        node.add_right_child(TwoNode(key))
             else:
                 print("Key already present")
                 return
