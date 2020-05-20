@@ -1,12 +1,13 @@
 import json
 from random import randint, seed
+from three_node import ThreeNode
 
 
 class TwoNode:
     def __init__(self, key):
         print("Creating a Two Node with key: {}".format(key))
         self.parent = None
-        self.key_left = key
+        self.key = key
         self.tree_left = None
         self.tree_right = None
 
@@ -20,18 +21,25 @@ class TwoNode:
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)
         print("Traversing Node: {}".format(self))
-        if key < self.key_left:
+        if key < self.key:
             print("To Left: {}".format(self.tree_left))
             return (-1, True)
-        if key == self.key_left:
+        if key == self.key:
             print("Found: {}".format(self))
             return (0, False)
-        if key > self.key_left:
+        if key > self.key:
             print("To Right: {}".format(self.tree_right))
             return (1, True)
 
+    def make_three_tree(self, key):
+        if key < self.key:
+            three_node = ThreeNode(key, self.key)
+        elif key > self.key:
+            three_node = ThreeNode(self.key, key)
+        return three_node
+
     def __repr__(self):
-        str_to_print = "L:{}".format(self.key_left)
+        str_to_print = "L:{}".format(self.key)
         if self.tree_left is not None:
             str_to_print = "{} :: LT: {}".format(str_to_print, self.tree_left)
         if self.tree_right is not None:

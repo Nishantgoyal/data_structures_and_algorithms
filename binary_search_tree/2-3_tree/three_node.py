@@ -38,6 +38,10 @@ class ThreeNode:
                 print("To Right: {}".format(self.tree_mid))
                 return (1, True)
 
+    def append_child(self, node, direction):
+
+        pass
+
     def __repr__(self):
         str_to_print = "(L:{} R:{})".format(self.key_left, self.key_right)
         if self.tree_left is not None:
