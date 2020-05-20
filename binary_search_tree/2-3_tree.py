@@ -160,13 +160,13 @@ class Tree:
             if parent is None:
                 self.root = self.insert_key(key, node)
             else:
-                self.insert_key(key, node)
-                # if node is parent.tree_left:
-                #     parent.tree_left = self.insert_key(key, node)
-                # elif node is parent.tree_mid:
-                #     parent.tree_mid = self.insert_key(key, node)
-                # elif node is parent.tree_right:
-                #     parent.tree_right = self.insert_key(key, node)
+                # self.insert_key(key, node)
+                if node is parent.tree_left:
+                    parent.tree_left = self.insert_key(key, node)
+                elif node is parent.tree_mid:
+                    parent.tree_mid = self.insert_key(key, node)
+                elif node is parent.tree_right:
+                    parent.tree_right = self.insert_key(key, node)
 
     def insert_key(self, node, key, node1=None, node2=None):
         print("Inserting key: {} in Node: {}".format(key, node))
@@ -175,6 +175,7 @@ class Tree:
             (node1, mid, node2) = node.split_node(key)
             print("Node split: {} {} {}".format(node1, mid, node2))
             if node.parent is None:
+                # Create a 2-tree parent and add node 1 as left child, and node 2 as right child
                 print("Node: {} parent is None".format(node))
                 node = Node(mid)
                 print("Created Node: {}".format(node))
