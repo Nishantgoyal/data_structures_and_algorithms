@@ -17,18 +17,21 @@ class TwoNode:
         return self.tree_left is not None or self.tree_right is not None
 
     def add_left_child(self, node):
+        print("Adding Left Child: {} to Node: {}".format(node, self))
         self.tree_left = node
         node.parent = self
 
     def add_right_child(self, node):
+        print("Adding Right Child: {} to Node: {}".format(node, self))
         self.tree_right = node
         node.parent = self
 
-    def append_child(self, node, new_node):
+    def replace_child(self, node, new_node):
+        print("Replacing Node: {} with {}".format(node, new_node))
         if node is self.tree_left:
-            self.tree_left = new_node
+            self.add_left_child(new_node)
         elif node is self.tree_right:
-            self.tree_right = new_node
+            self.add_right_child(new_node)
 
     def traverse(self, key):
         if not self.has_child():
@@ -94,24 +97,28 @@ class ThreeNode:
         return self.tree_left is not None or self.tree_mid is not None or self.tree_right is not None
 
     def add_left_child(self, node):
+        print("Adding Left Child: {} to Node: {}".format(node, self))
         self.tree_left = node
         node.parent = self
 
     def add_right_child(self, node):
+        print("Adding Right Child: {} to Node: {}".format(node, self))
         self.tree_right = node
         node.parent = self
 
     def add_mid_child(self, node):
+        print("Adding Mid Child: {} to Node: {}".format(node, self))
         self.tree_mid = node
         node.parent = self
 
-    def append_child(self, node, new_node):
+    def replace_child(self, node, new_node):
+        print("Replacing Node: {} with {}".format(node, new_node))
         if node is self.tree_left:
-            self.tree_left = new_node
+            self.add_left_child(new_node)
         elif node is self.tree_mid:
-            self.tree_mid = new_node
+            self.add_mid_child(new_node)
         elif node is self.tree_right:
-            self.tree_right = new_node
+            self.add_right_child(new_node)
 
     def traverse(self, key):
         if not self.has_child():
