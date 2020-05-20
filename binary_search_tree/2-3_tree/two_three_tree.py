@@ -1,8 +1,7 @@
 import json
 from random import randint, seed
 
-from two_node import TwoNode
-from three_node import ThreeNode
+from nodes import TwoNode, ThreeNode
 
 
 class TwoThreeTree:
@@ -77,6 +76,16 @@ class TwoThreeTree:
                 new_node = node.make_three_tree(key)
                 if node.parent is None:
                     self.root = new_node
+            else:
+                print("Node: {} is three tree...".format(node))
+                print("Splitting node: {}...".format(node))
+                (node1, mid, node2) = node.split_node(key)
+                print(
+                    "Splitted the node: {} into: {} - {} - {}".format(node, node1, mid, node2))
+                if node.parent is None:
+                    self.root = TwoNode(mid)
+                    self.root.tree_left = node1
+                    self.root.tree_right = node2
     #         parent = node.parent
     #         if parent is None:
     #             self.root = self.insert_key(key, node)
