@@ -23,6 +23,7 @@ class TwoNode(Node):
         APIs
          - repr
          - get_children
+         - add_two_node_as_child
     '''
 
     def __init__(self, key, parent=None):
@@ -42,12 +43,20 @@ class TwoNode(Node):
             children.append(self.tree_right)
         return children
 
+    def add_two_node_as_child(self, node):
+        node_key = node.key
+        if node_key < self.key:
+            self.tree_left = node
+            return
+        self.tree_right = node
+
 
 class ThreeNode(Node):
     '''
         APIs
          - repr
          - get_children
+         - add_two_node_as_child
     '''
 
     def __init__(self, l_key, r_key, parent=None):
@@ -71,13 +80,25 @@ class ThreeNode(Node):
             children.append(self.tree_right)
         return children
 
+    def add_two_node_as_child(self, node):
+        node_key = node.key
+        if node_key < self.l_key:
+            self.tree_left = node
+            return
+        if node_key < self.r_key:
+            self.tree_mid = node
+            return
+        self.tree_right = node
 
-# if __name__ == "__main__":
-#     # tn = ThreeNode(2, 3)
-#     tn = TwoNode(2)
-#     print(tn)
-#     print(tn.is_leaf())
-#     t2 = ThreeNode(3, 2)
-#     tn.tree_left = t2
-#     print(tn.get_children())
-#     print(tn.type_of_node())
+
+if __name__ == "__main__":
+    tn = ThreeNode(2, 3)
+    # tn = TwoNode(2)
+    # print(tn.is_leaf())
+    t1 = TwoNode(3)
+    t2 = ThreeNode(13, 14)
+
+    tn.add_two_node_as_child(t1)
+
+    print(tn)
+    print(tn.get_children())
