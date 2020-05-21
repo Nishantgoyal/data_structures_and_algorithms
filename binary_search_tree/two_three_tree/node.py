@@ -127,34 +127,55 @@ class ThreeNode(Node):
                 - l_key < r_key
                 - node_l_key < node_r_key
             Cases:
-              - r_key < node_l_key
+              1 r_key < node_l_key
                 - add as right child
-              - l_key < node_l_key < r_key < node_r_key
+
+              2 l_key < node_l_key < r_key < node_r_key
                 - split node
                 - add l_node as mid child
                 - add r_node as right child
-              - l_key < node_l_key < node_r_key < r_key
+
+              3 l_key < node_l_key and node_r_key < r_key
                 - add node as mid child
-              - node_l_key < l_key < r_key < node_r_key
+
+              4 node_l_key < l_key and r_key < node_r_key
                 - split node
                 - add l_node as left child
                 - add r_node as right child
-              - node_l_key < l_key < node_r_key < r_key
+
+              5 node_l_key < l_key < node_r_key < r_key
                 - split node
                 - add l_node as left child
                 - add r_node as mid child
-              - node_r_key < l_key
+
+              6 node_r_key < l_key
                 - add node as left child
         '''
-        # if self.key < node.l_key:
-        #     self.tree_right = node
-        #     return
-        # if self.key > node.r_key:
-        #     self.tree_left = node
-        #     return
-        # node_1, _, node_2 = node.split_node()
-        # self.add_two_node_as_child(node_1)
-        # self.add_two_node_as_child(node_2)
+        node_l_key = node.l_key
+        node_r_key = node.r_key
+        if self.r_key < node_l_key:
+            # Case 1: r_key < node_l_key
+            pass
+
+        elif self.l_key < node_l_key and node_l_key < self.r_key and self.r_key < node_r_key:
+            # Case 2: l_key < node_l_key < r_key < node_r_key
+            pass
+
+        elif self.l_key < node_l_key and node_r_key < self.r_key:
+            # Case 3: l_key < node_l_key and node_r_key < r_key
+            pass
+
+        elif node_l_key < self.l_key and self.r_key < node_r_key:
+            # Case 4: node_l_key < l_key and r_key < node_r_key
+            pass
+
+        elif node_l_key < self.l_key and self.l_key < node_r_key and node_r_key < self.r_key:
+            # Case 5: node_l_key < l_key < node_r_key < r_key
+            pass
+
+        elif node_l_key < self.l_key:
+            # Case 6: node_r_key < l_key
+            pass
 
 
 if __name__ == "__main__":
