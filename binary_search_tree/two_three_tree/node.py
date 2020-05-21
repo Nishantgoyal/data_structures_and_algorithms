@@ -79,6 +79,7 @@ class ThreeNode(Node):
          - get_children
          - add_two_node_as_child
          - split_node
+         - add_three_node_as_child
     '''
 
     def __init__(self, l_key, r_key, parent=None):
@@ -119,6 +120,29 @@ class ThreeNode(Node):
         l_node.tree_right = self.tree_mid
         r_node.tree_right = self.tree_right
         return l_node, None, r_node
+
+    def add_three_node_as_child(self, node):
+        '''
+            keys: 
+                - l_key < r_key
+                - node_l_key < node_r_key
+            Cases:
+                - l_key < r_key < node_l_key < node_r_key
+                - l_key < node_l_key < r_key < node_r_key
+                - l_key < node_l_key < node_r_key < r_key
+                - node_l_key < l_key < r_key < node_r_key
+                - node_l_key < l_key < node_r_key < r_key
+                - node_l_key < node_r_key < l_key < r_key
+        '''
+        # if self.key < node.l_key:
+        #     self.tree_right = node
+        #     return
+        # if self.key > node.r_key:
+        #     self.tree_left = node
+        #     return
+        # node_1, _, node_2 = node.split_node()
+        # self.add_two_node_as_child(node_1)
+        # self.add_two_node_as_child(node_2)
 
 
 if __name__ == "__main__":
