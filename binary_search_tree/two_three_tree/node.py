@@ -52,7 +52,6 @@ class TwoNode(Node):
         self.tree_right = node
 
     def add_three_node_as_child(self, node):
-        # TODO
         '''
             Cases:
              1. key < node_l_key < node_r_key
@@ -68,9 +67,9 @@ class TwoNode(Node):
         if self.key > node.r_key:
             self.tree_left = node
             return
-        # node_1, _, node_2 = node.split()
-        # self.add_two_node_as_child(node_1)
-        # self.add_two_node_as_child(node_2)
+        node_1, _, node_2 = node.split_node()
+        self.add_two_node_as_child(node_1)
+        self.add_two_node_as_child(node_2)
 
 
 class ThreeNode(Node):
@@ -79,7 +78,7 @@ class ThreeNode(Node):
          - repr
          - get_children
          - add_two_node_as_child
-         - split
+         - split_node
     '''
 
     def __init__(self, l_key, r_key, parent=None):
@@ -113,15 +112,23 @@ class ThreeNode(Node):
             return
         self.tree_right = node
 
+    def split_node(self):
+        l_node = TwoNode(self.l_key)
+        r_node = TwoNode(self.r_key)
+        l_node.tree_left = self.tree_left
+        l_node.tree_right = self.tree_mid
+        r_node.tree_right = self.tree_right
+        return l_node, None, r_node
+
 
 if __name__ == "__main__":
-    tn = ThreeNode(2, 3)
-    # tn = TwoNode(2)
+    # tn = ThreeNode(2, 3)
+    tn = TwoNode(12)
     # print(tn.is_leaf())
     t1 = TwoNode(3)
-    t2 = ThreeNode(13, 14)
+    t2 = ThreeNode(1, 2)
 
-    tn.add_two_node_as_child(t1)
+    tn.add_three_node_as_child(t2)
 
     print(tn)
     print(tn.get_children())
