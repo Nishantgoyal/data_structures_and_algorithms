@@ -9,25 +9,25 @@ def main():
     # print()
     tree.insert(14)
 
-    print()
-    tree.insert(2)
+    # print()
+    # tree.insert(2)
 
-    print()
-    tree.insert(8)
+    # print()
+    # tree.insert(8)
 
-    print()
-    tree.insert(6)
+    # print()
+    # tree.insert(6)
 
-    print()
-    tree.insert(26)
+    # print()
+    # tree.insert(26)
 
-    print("\nTree: {}".format(tree.root))
-    tree.dump_tree()
-    print()
-    tree.insert(5)
+    # print("\nTree: {}".format(tree.root))
+    # tree.dump_tree()
+    # print()
+    # tree.insert(5)
 
-    print("\nTree: {}".format(tree.root))
-    tree.dump_tree()
+    print("\nTree: {}".format(tree))
+
     # # seed(20)
     # # ele_count = 1
     # # while ele_count > 0:

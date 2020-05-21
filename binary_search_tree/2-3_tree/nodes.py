@@ -75,9 +75,10 @@ class TwoNode:
         print("New Node: {}".format(new_node))
         if self.parent is None:
             print("Node: {} parent is None".format(self))
-            self.root = new_node
+            # self.root = new_node
         else:
-            node.parent.replace_child(node, new_node)
+            # node.parent.replace_child(node, new_node)
+            pass
         print("Inserting key into a two node: {}".format(self))
         return self.make_three_node(key)
 
