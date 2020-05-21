@@ -68,6 +68,7 @@ class TwoThreeTree:
                 return
         else:
             print("Node: {} is leaf...".format(node))
+            # node.insert_key(key)
             if node.node_type() == 2:
                 print("Node: {} is two Node...".format(node))
                 print("Making node: {} a three Node...".format(node))
@@ -95,45 +96,6 @@ class TwoThreeTree:
                 else:
                     print("Inserting {} into {}".format(mid, node.parent))
                     node.parent.insert_key(key)
-                    # print(" {} into {}".format(mid, node.parent))
-                    # parent = node.parent
-    #         if parent is None:
-    #             self.root = self.insert_key(key, node)
-    #         else:
-    #             # self.insert_key(key, node)
-    #             if node is parent.tree_left:
-    #                 parent.tree_left = self.insert_key(key, node)
-    #             elif node is parent.tree_mid:
-    #                 parent.tree_mid = self.insert_key(key, node)
-    #             elif node is parent.tree_right:
-    #                 parent.tree_right = self.insert_key(key, node)
-
-    # def insert_key(self, node, key, node1=None, node2=None):
-    #     print("Inserting key: {} in Node: {}".format(key, node))
-    #     if node.is_3_tree():
-    #         print("Node: {} is 3 tree".format(node))
-    #         (node1, mid, node2) = node.split_node(key)
-    #         print("Node split: {} {} {}".format(node1, mid, node2))
-    #         if node.parent is None:
-    #             # Create a 2-tree parent and add node 1 as left child, and node 2 as right child
-    #             print("Node: {} parent is None".format(node))
-    #             node = Node(mid)
-    #             print("Created Node: {}".format(node))
-    #             node.tree_left = node1
-    #             node.tree_right = node2
-    #             node1.parent = node
-    #             node2.parent = node
-    #             return node
-    #         else:
-    #             node.parent = node.parent.insert_key(key)
-    #             if node.parent.tree_left:
-
-    #             return node
-
-    #     else:
-    #         print("Node: {} is 2 tree".format(node))
-    #         node.make_3_tree(key)
-    #         return node
 
     def dump_tree(self):
         with open("{}_tree.json".format(__file__.split(".")[0]), "w") as fn:

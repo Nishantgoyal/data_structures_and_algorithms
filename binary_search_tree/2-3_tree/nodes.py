@@ -69,6 +69,15 @@ class TwoNode:
         return three_node
 
     def insert_key(self, key):
+        print("Node: {} is two Node...".format(self))
+        print("Making node: {} a three Node...".format(self))
+        new_node = self.make_three_node(key)
+        print("New Node: {}".format(new_node))
+        if self.parent is None:
+            print("Node: {} parent is None".format(self))
+            self.root = new_node
+        else:
+            node.parent.replace_child(node, new_node)
         print("Inserting key into a two node: {}".format(self))
         return self.make_three_node(key)
 
