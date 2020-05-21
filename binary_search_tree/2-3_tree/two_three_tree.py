@@ -68,8 +68,7 @@ class TwoThreeTree:
                 return
         else:
             print("Node: {} is leaf...".format(node))
-
-            # node.insert_key(key)
+            node.insert_key(key)
             '''
                 Code below logic to be part of node implementation of insert_key
             '''

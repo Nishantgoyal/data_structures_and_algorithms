@@ -48,10 +48,18 @@ class TwoNode:
             return (1, True)
 
     def make_three_node(self, key):
-        if key < self.key:
-            three_node = ThreeNode(key, self.key)
-        elif key > self.key:
-            three_node = ThreeNode(self.key, key)
+        print("Making three node from: {}".format(self))
+        # children = [
+        #     self.tree_left,
+        #     self.tree_right
+        # ]
+        # if key < self.key:
+        #     three_node = ThreeNode(key, self.key)
+        # elif key > self.key:
+        #     three_node = ThreeNode(self.key, key)
+        # for child in children:
+        #     if child:
+
         # if self.tree_left:
         #     if self.tree_left.node_type == 2:
         #         child_key = self.tree_left.key
@@ -66,21 +74,22 @@ class TwoNode:
         #             three_node.tree_right = self.tree_right
         #         else:
         #             three_node.add_to_mid_tree(self.tree_right)
-        return three_node
+        # return three_node
 
     def insert_key(self, key):
+        print("Inserting key: {} is node: {}".format(key, self))
         print("Node: {} is two Node...".format(self))
-        print("Making node: {} a three Node...".format(self))
-        new_node = self.make_three_node(key)
-        print("New Node: {}".format(new_node))
-        if self.parent is None:
-            print("Node: {} parent is None".format(self))
-            # self.root = new_node
-        else:
-            # node.parent.replace_child(node, new_node)
-            pass
-        print("Inserting key into a two node: {}".format(self))
-        return self.make_three_node(key)
+        print("Converting two node: {} to a three Node...".format(self))
+        # new_node = self.make_three_node(key)
+        # print("New Node: {}".format(new_node))
+        # if self.parent is None:
+        #     print("Node: {} parent is None".format(self))
+        #     # self.root = new_node
+        # else:
+        #     # node.parent.replace_child(node, new_node)
+        #     pass
+        # print("Inserting key into a two node: {}".format(self))
+        # return self.make_three_node(key)
 
     def __repr__(self):
         str_to_print = "(L:{})".format(self.key)
@@ -162,7 +171,7 @@ class ThreeNode:
                 return (TwoNode(self.key_left), self.key_right, TwoNode(key))
 
     def insert_key(self, key):
-        pass
+        print("Inserting key: {} is node: {}".format(key, self))
 
     def __repr__(self):
         str_to_print = "(L:{} R:{})".format(self.key_left, self.key_right)

@@ -9,8 +9,8 @@ def main():
     # print()
     tree.insert(14)
 
-    # print()
-    # tree.insert(2)
+    print()
+    tree.insert(2)
 
     # print()
     # tree.insert(8)
