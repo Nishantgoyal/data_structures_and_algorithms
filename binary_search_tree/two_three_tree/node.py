@@ -127,12 +127,24 @@ class ThreeNode(Node):
                 - l_key < r_key
                 - node_l_key < node_r_key
             Cases:
-                - l_key < r_key < node_l_key < node_r_key
-                - l_key < node_l_key < r_key < node_r_key
-                - l_key < node_l_key < node_r_key < r_key
-                - node_l_key < l_key < r_key < node_r_key
-                - node_l_key < l_key < node_r_key < r_key
-                - node_l_key < node_r_key < l_key < r_key
+              - r_key < node_l_key
+                - add as right child
+              - l_key < node_l_key < r_key < node_r_key
+                - split node
+                - add l_node as mid child
+                - add r_node as right child
+              - l_key < node_l_key < node_r_key < r_key
+                - add node as mid child
+              - node_l_key < l_key < r_key < node_r_key
+                - split node
+                - add l_node as left child
+                - add r_node as right child
+              - node_l_key < l_key < node_r_key < r_key
+                - split node
+                - add l_node as left child
+                - add r_node as mid child
+              - node_r_key < l_key
+                - add node as left child
         '''
         # if self.key < node.l_key:
         #     self.tree_right = node
