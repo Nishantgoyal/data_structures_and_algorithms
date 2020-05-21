@@ -24,6 +24,7 @@ class TwoNode(Node):
          - repr
          - get_children
          - add_two_node_as_child
+         - add_three_node_as_child
     '''
 
     def __init__(self, key, parent=None):
@@ -50,6 +51,27 @@ class TwoNode(Node):
             return
         self.tree_right = node
 
+    def add_three_node_as_child(self, node):
+        # TODO
+        '''
+            Cases:
+             1. key < node_l_key < node_r_key
+                Add node in right
+             2. node_l_key < node_r_key < key
+                Add node in left
+             3. node_l_key < key < node_r_key
+                split node
+        '''
+        if self.key < node.l_key:
+            self.tree_right = node
+            return
+        if self.key > node.r_key:
+            self.tree_left = node
+            return
+        # node_1, _, node_2 = node.split()
+        # self.add_two_node_as_child(node_1)
+        # self.add_two_node_as_child(node_2)
+
 
 class ThreeNode(Node):
     '''
@@ -57,6 +79,7 @@ class ThreeNode(Node):
          - repr
          - get_children
          - add_two_node_as_child
+         - split
     '''
 
     def __init__(self, l_key, r_key, parent=None):
