@@ -1,6 +1,9 @@
+class Node:
+    def type_of_node(self):
+        return str(self.__class__).split(".")[1].split("'")[0]
 
 
-class TwoNode:
+class TwoNode(Node):
     '''
         APIs
          - repr
@@ -29,11 +32,8 @@ class TwoNode:
             children.append(self.tree_right)
         return children
 
-    def type_of_node(self):
-        return str(self.__class__).split(".")[1].split("'")[0]
 
-
-class ThreeNode:
+class ThreeNode(Node):
     '''
         APIs
          - repr
@@ -66,15 +66,12 @@ class ThreeNode:
             children.append(self.tree_right)
         return children
 
-    def type_of_node(self):
-        return str(self.__class__).split(".")[1].split("'")[0]
 
-
-# if __name__ == "__main__":
-#     tn = TwoNode(2)
-#     print(tn)
-#     print(tn.is_leaf())
-#     t2 = ThreeNode(3, 2)
-#     tn.tree_left = t2
-#     print(tn.get_children())
-#     print(tn.type_of_node())
+if __name__ == "__main__":
+    tn = TwoNode(2)
+    print(tn)
+    print(tn.is_leaf())
+    t2 = ThreeNode(3, 2)
+    tn.tree_left = t2
+    print(tn.get_children())
+    print(tn.type_of_node())
