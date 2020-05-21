@@ -33,6 +33,39 @@ class TwoNode:
         elif node is self.tree_right:
             self.add_right_child(new_node)
 
+    def join(self, node):
+        '''
+            Cases:
+                1. 2-Node + None --> 2-Node
+                2. 2-Node + 2-Node --> 3-Node
+                3. 2-Node + 3-Node --> ??
+        '''
+        if node is None:
+            return self
+        if node.node_type() == 2:
+            key_1 = self.key
+            key_2 = node.key
+            new_node = None
+            if key_1 < key_2:
+                new_node = ThreeNode(key_1, key_2)
+                new_node.tree_left = self.tree_left
+                new_node.tree_right = node.tree_right
+                if self.tree_right:
+                    new_node.tree_mid = self.tree_right.join(node.tree_left)
+                else:
+                    new_node.tree_mid = node.tree_left
+            else:
+                new_node = ThreeNode(key_2, key_1)
+                new_node.tree_left = node.tree_left
+                new_node.tree_right = self.tree_right
+                if self.tree_left:
+                    new_node.tree_mid = self.tree_left.join(node.tree_right)
+                else:
+                    new_node.tree_mid = node.tree_right
+        else:
+            pass
+        return new_node
+
     def traverse(self, key):
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)
