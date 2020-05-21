@@ -1,15 +1,28 @@
 class Node:
+    '''
+        APIs
+         - type_of_node
+         - is_leaf
+    '''
+
     def type_of_node(self):
         return str(self.__class__).split(".")[1].split("'")[0]
+
+    def is_leaf(self):
+        return self.get_children() == []
+
+    def get_children(self):
+        '''
+            Abstract
+        '''
+        raise "Please implement method 'get_children'"
 
 
 class TwoNode(Node):
     '''
         APIs
          - repr
-         - is_leaf
          - get_children
-         - type_of_node
     '''
 
     def __init__(self, key, parent=None):
@@ -20,9 +33,6 @@ class TwoNode(Node):
 
     def __repr__(self):
         return "({})".format(self.key)
-
-    def is_leaf(self):
-        return self.get_children() == []
 
     def get_children(self):
         children = []
@@ -37,9 +47,7 @@ class ThreeNode(Node):
     '''
         APIs
          - repr
-         - is_leaf
          - get_children
-         - type_of_node
     '''
 
     def __init__(self, l_key, r_key, parent=None):
@@ -53,9 +61,6 @@ class ThreeNode(Node):
     def __repr__(self):
         return "({},{})".format(self.l_key, self.r_key)
 
-    def is_leaf(self):
-        return self.get_children() == []
-
     def get_children(self):
         children = []
         if self.tree_left:
@@ -67,11 +72,12 @@ class ThreeNode(Node):
         return children
 
 
-if __name__ == "__main__":
-    tn = TwoNode(2)
-    print(tn)
-    print(tn.is_leaf())
-    t2 = ThreeNode(3, 2)
-    tn.tree_left = t2
-    print(tn.get_children())
-    print(tn.type_of_node())
+# if __name__ == "__main__":
+#     # tn = ThreeNode(2, 3)
+#     tn = TwoNode(2)
+#     print(tn)
+#     print(tn.is_leaf())
+#     t2 = ThreeNode(3, 2)
+#     tn.tree_left = t2
+#     print(tn.get_children())
+#     print(tn.type_of_node())
