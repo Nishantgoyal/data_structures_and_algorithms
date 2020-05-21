@@ -18,7 +18,7 @@ class TwoNode:
         return "({})".format(self.key)
 
     def is_leaf(self):
-        pass
+        return self.get_children() == []
 
     def get_children(self):
         children = []
@@ -49,7 +49,7 @@ class ThreeNode:
         return "({},{})".format(self.l_key, self.r_key)
 
     def is_leaf(self):
-        pass
+        return self.get_children() == []
 
     def get_children(self):
         children = []
