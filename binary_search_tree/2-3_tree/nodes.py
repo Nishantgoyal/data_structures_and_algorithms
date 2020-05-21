@@ -172,6 +172,9 @@ class ThreeNode:
         elif node is self.tree_right:
             self.add_right_child(new_node)
 
+    def join(self, node):
+        pass
+
     def traverse(self, key):
         if not self.has_child():
             raise "Trying to traverse a leaf node: {}".format(self)

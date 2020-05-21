@@ -186,6 +186,8 @@ class Tree:
                 return node
             else:
                 node.parent = node.parent.insert_key(key)
+                if node.parent.tree_left:
+
                 return node
 
         else:
