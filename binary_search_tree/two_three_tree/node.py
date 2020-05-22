@@ -286,6 +286,8 @@ class ThreeNode(Node):
                 - l_key, r_key
             Case 1: node is a leaf
                 Case 1.1: node has no parent
+                    - split the three node into two two-nodes - WIP
+
                 Case 1.2: node has a parent
             Case 2: node has children
         '''
@@ -297,8 +299,8 @@ class ThreeNode(Node):
 
 if __name__ == "__main__":
     tn = TwoNode(22)
-    # tn = ThreeNode(15, 20)
-    tn.tree_left = TwoNode(5)
+    tn = ThreeNode(15, 20)
+    # tn.tree_left = TwoNode(5)
     # tn.tree_right = ThreeNode(15, 20)
     # tn = tn.convert_to_three_node(7)
     # tn = TwoNode(12)
