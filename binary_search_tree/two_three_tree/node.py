@@ -184,6 +184,7 @@ class ThreeNode(Node):
          - get_children
          - add_two_node_as_child
          - split_node
+         - split_node_with_key
          - add_three_node_as_child
          - get_children_json
          - insert_key
@@ -223,10 +224,92 @@ class ThreeNode(Node):
     def split_node(self):
         l_node = TwoNode(self.l_key)
         r_node = TwoNode(self.r_key)
-        l_node.tree_left = self.tree_left
-        l_node.tree_right = self.tree_mid
-        r_node.tree_right = self.tree_right
+        l_node.add_child(self.tree_left)
+        l_node.add_child(self.tree_mid)
+        r_node.add_child(self.tree_right)
         return l_node, None, r_node
+
+    def split_node_with_key(self, key):
+        '''
+            Input:
+                - 3-Node
+                    - l_key < r_key
+                    - tree_left
+                    - tree_mid
+                    - tree_right
+                - key
+            Cases:
+                1 key < l_key
+                    - l_node = TwoNode(key)
+                    - r_node = TwoNode(r_key)
+                    - mid = l_key
+                    - l_node.tree_left = node.tree_left
+                    - r_node.tree_left = node.tree_mid
+                    - r_node.tree_right = node.tree_right
+                2 l_key < key < r_key
+                    - l_node = TwoNode(l_key)
+                    - r_node = TwoNode(r_key)
+                    - mid = key
+                    - l_node.tree_left = node.tree_left
+                    - r_node.tree_right = node.tree_right
+                    2.1: middle child is a 3-node:
+                        2.1.1: key < mc.l_key
+                            - r_node.tree_left = node.tree_mid
+                        2.1.2: mc.l_key < key < mc.r_key
+                            - split(mc) --> mc1, mc2
+                            - l_node.tree_right = mc1
+                            - r_node.tree_left = mc2
+                        2.1.3: mc.r_key < key
+                            - l_node.tree_right = node.tree_mid
+                    2.2: middle child is a 2-node:
+                        2.2.1: key < mc.key
+                            - r_node.tree_left = node.tree_mid
+                        2.2.2: key > mc.key
+                            - l_node.tree_right = node.tree_mid
+                3 r_key < key
+                    - l_node = TwoNode(l_key)
+                    - r_node = TwoNode(key)
+                    - mid = r_key
+                    - l_node.tree_left = node.tree_left
+                    - l_node.tree_right = node.tree_mid
+                    - r_node.tree_right = node.tree_right
+        '''
+        if key < self.l_key:
+            l_node = TwoNode(key)
+            mid = self.l_key
+            r_node = TwoNode(self.r_key)
+            l_node.add_child(self.tree_left)
+            r_node.add_child(self.tree_mid)
+            r_node.add_child(self.tree_right)
+        elif self.l_key < key < self.r_key:
+            l_node = TwoNode(self.l_key)
+            mid = key
+            r_node = TwoNode(self.r_key)
+            l_node.add_child(self.tree_left)
+            r_node.add_child(self.tree_right)
+            if self.tree_mid:
+                if self.tree_mid.type_of_node() == "TwoNode":
+                    if key < self.tree_mid.key:
+                        r_node.add_child(self.tree_mid)
+                    elif key > self.tree_mid.key:
+                        l_node.add_three_node_as_child(self.tree_mid)
+                else:
+                    if key < self.tree_mid.l_key:
+                        r_node.add_child(self.tree_mid)
+                    elif self.tree_mid.l_key < key < self.tree_mid.r_key:
+                        mc_1, _, mc_2 = self.tree_mid.split_node()
+                        l_node.add_child(mc_1)
+                        r_node.add_child(mc_2)
+                    elif self.tree_mid.r_key < key:
+                        l_node.add_child(self.tree_mid)
+        elif self.r_key < key:
+            l_node = TwoNode(self.l_key)
+            mid = self.r_key
+            r_node = TwoNode(key)
+            l_node.add_child(self.tree_left)
+            r_node.add_child(self.tree_mid)
+            r_node.add_child(self.tree_right)
+        return l_node, mid, r_node
 
     def add_three_node_as_child(self, node):
         node_l_key = node.l_key
