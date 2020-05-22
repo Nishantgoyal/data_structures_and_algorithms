@@ -3,6 +3,15 @@ class Node:
         APIs
          - type_of_node
          - is_leaf
+         - add_child
+         - print_tree
+
+        Abstract
+         - add_two_node_as_child
+         - add_three_node_as_child
+         - get_children
+         - get_children_json
+         - insert_key
     '''
 
     def type_of_node(self):
@@ -10,6 +19,25 @@ class Node:
 
     def is_leaf(self):
         return self.get_children() == []
+
+    def add_two_node_as_child(self, node):
+        '''
+            Abstract
+        '''
+        raise "Please implement method 'add_two_node_as_child'"
+
+    def add_three_node_as_child(self, node):
+        '''
+            Abstract
+        '''
+        raise "Please implement method 'add_three_node_as_child'"
+
+    def add_child(self, child):
+        if child.type_of_node() == "TwoNode":
+            self.add_two_node_as_child(child)
+        else:
+            self.add_three_node_as_child(child)
+        child.parent = self
 
     def get_children(self):
         '''
@@ -44,6 +72,7 @@ class TwoNode(Node):
          - get_children
          - add_two_node_as_child
          - add_three_node_as_child
+         - get_children_json
          - convert into three node
     '''
 
@@ -72,12 +101,6 @@ class TwoNode(Node):
         self.tree_right = node
 
     def add_three_node_as_child(self, node):
-        '''
-            Cases:
-             1. key < node_l_key
-                Add node in right
-             3.
-        '''
         if self.key < node.l_key:
             # key < node_l_key
             # Add node in right
