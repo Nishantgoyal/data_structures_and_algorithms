@@ -44,6 +44,7 @@ class TwoNode(Node):
          - get_children
          - add_two_node_as_child
          - add_three_node_as_child
+         - convert into three node
     '''
 
     def __init__(self, key, parent=None):
@@ -75,7 +76,7 @@ class TwoNode(Node):
             Cases:
              1. key < node_l_key
                 Add node in right
-             3. 
+             3.
         '''
         if self.key < node.l_key:
             # key < node_l_key
@@ -97,6 +98,29 @@ class TwoNode(Node):
             json["L"] = self.tree_left
         if self.tree_right:
             json["R"] = self.tree_right
+
+    def convert_to_three_node(self, key):
+        print("Converting node: {} into three node with key: {}".format(self, key))
+        children = self.get_children()
+        print("Node: {} has children: {}".format(self, children))
+        three_node = ThreeNode(self.key, key)
+        if key < self.key:
+            three_node = ThreeNode(key, self.key)
+        for child in children:
+            print("Appending child: {} of type: {} to Node: {}".format(
+                child, child.type_of_node(), three_node))
+            if child.type_of_node() == "TwoNode":
+                three_node.add_two_node_as_child(child)
+            else:
+                three_node.add_three_node_as_child(child)
+        three_node.print_tree()
+
+    def insert_key(self, key):
+        print("Inserting key: {} in Node: {}".format(key, self))
+        if self.is_leaf():
+            print("Node is a leaf")
+        else:
+            print("Node has children")
 
 
 class ThreeNode(Node):
@@ -199,14 +223,21 @@ class ThreeNode(Node):
         if self.tree_mid:
             json["M"] = self.tree_mid
 
+    # def insert_key(self, key):
+    #     print("Inserting key: {} in Node: {}".format(key, self))
+
 
 if __name__ == "__main__":
-    tn = ThreeNode(12, 23)
+    tn = TwoNode(12)
+    tn.tree_left = TwoNode(5)
+    tn.tree_right = ThreeNode(15, 20)
+    tn = tn.convert_to_three_node(7)
     # tn = TwoNode(12)
     # print(tn.is_leaf())
-    t1 = TwoNode(3)
-    t2 = ThreeNode(1, 20)
+    # t1 = TwoNode(3)
+    # t2 = ThreeNode(1, 20)
+    # tn.insert_key(5)
 
-    tn.add_three_node_as_child(t2)
+    # tn.add_three_node_as_child(t2)
 
-    tn.print_tree()
+    # tn.print_tree()
