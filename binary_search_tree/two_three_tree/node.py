@@ -136,7 +136,7 @@ class TwoNode(Node):
             print("Appending child: {} of type: {} to Node: {}".format(
                 child, child.type_of_node(), three_node))
             three_node.add_child(child)
-        three_node.print_tree()
+        # three_node.print_tree()
         return three_node
 
     def insert_key(self, key):
@@ -153,6 +153,7 @@ class TwoNode(Node):
                     - Insert in right child
                 Case 2.1: key is greater then node_key, and right child does not exist
                     - Create 2-Node Right Child with key
+            Returns the node after insertion is complete
         '''
         print("Inserting key: {} in Node: {}".format(key, self))
         if self.is_leaf():
@@ -162,16 +163,17 @@ class TwoNode(Node):
             print("Node has children")
             if key < self.key:
                 if self.tree_left:
-                    self.tree_left.insert_key(key)
+                    self.tree_left = self.tree_left.insert_key(key)
                 else:
                     node = TwoNode(key)
                     self.add_child(node)
             elif key > self.key:
                 if self.tree_right:
-                    self.tree_right.insert_key(key)
+                    self.tree_right = self.tree_right.insert_key(key)
                 else:
                     node = TwoNode(key)
                     self.add_child(node)
+        return self
 
 
 class ThreeNode(Node):
@@ -278,11 +280,24 @@ class ThreeNode(Node):
             json["M"] = self.tree_mid
 
     def insert_key(self, key):
+        '''
+            Inserting a key into a 3-node
+            keys:
+                - l_key, r_key
+            Case 1: node is a leaf
+                Case 1.1: node has no parent
+                Case 1.2: node has a parent
+            Case 2: node has children
+        '''
         print("Inserting key: {} in Node: {}".format(key, self))
+        print(self)
+        self = None
+        print(self)
 
 
 if __name__ == "__main__":
-    tn = TwoNode(12)
+    tn = TwoNode(22)
+    # tn = ThreeNode(15, 20)
     tn.tree_left = TwoNode(5)
     # tn.tree_right = ThreeNode(15, 20)
     # tn = tn.convert_to_three_node(7)
@@ -290,7 +305,7 @@ if __name__ == "__main__":
     # print(tn.is_leaf())
     # t1 = TwoNode(3)
     # t2 = ThreeNode(1, 20)
-    tn.insert_key(13)
+    tn = tn.insert_key(13)
 
     # tn.add_three_node_as_child(t2)
 
