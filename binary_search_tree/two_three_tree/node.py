@@ -292,9 +292,7 @@ class ThreeNode(Node):
             Case 2: node has children
         '''
         print("Inserting key: {} in Node: {}".format(key, self))
-        print(self)
-        self = None
-        print(self)
+        return self
 
 
 if __name__ == "__main__":
