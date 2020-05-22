@@ -1,6 +1,6 @@
 class Node:
     '''
-        APIs
+        Methods
          - type_of_node
          - is_leaf
          - add_child
@@ -67,8 +67,9 @@ class Node:
 
 class TwoNode(Node):
     '''
-        APIs
-         - repr
+        Methods
+         - __init__
+         - __repr__
          - get_children
          - add_two_node_as_child
          - add_three_node_as_child
@@ -132,11 +133,9 @@ class TwoNode(Node):
         for child in children:
             print("Appending child: {} of type: {} to Node: {}".format(
                 child, child.type_of_node(), three_node))
-            if child.type_of_node() == "TwoNode":
-                three_node.add_two_node_as_child(child)
-            else:
-                three_node.add_three_node_as_child(child)
+            three_node.add_three_node_as_child(child)
         three_node.print_tree()
+        return three_node
 
     def insert_key(self, key):
         print("Inserting key: {} in Node: {}".format(key, self))
@@ -148,12 +147,14 @@ class TwoNode(Node):
 
 class ThreeNode(Node):
     '''
-        APIs
-         - repr
+        Methods
+         - __init__
+         - __repr__
          - get_children
          - add_two_node_as_child
          - split_node
          - add_three_node_as_child
+         - get_children_json
     '''
 
     def __init__(self, l_key, r_key, parent=None):
