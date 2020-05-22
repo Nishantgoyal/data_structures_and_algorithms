@@ -30,6 +30,12 @@ class Node:
         print(tree)
         return tree
 
+    def insert_key(self, key):
+        '''
+            Abstract
+        '''
+        raise "Please implement method 'insert_key'"
+
 
 class TwoNode(Node):
     '''
@@ -67,22 +73,24 @@ class TwoNode(Node):
     def add_three_node_as_child(self, node):
         '''
             Cases:
-             1. key < node_l_key < node_r_key
+             1. key < node_l_key
                 Add node in right
-             2. node_l_key < node_r_key < key
-                Add node in left
-             3. node_l_key < key < node_r_key
-                split node
+             3. 
         '''
         if self.key < node.l_key:
+            # key < node_l_key
+            # Add node in right
             self.tree_right = node
-            return
-        if self.key > node.r_key:
+        elif self.key > node.r_key:
+            # node_r_key < key
+            # Add node in left
             self.tree_left = node
-            return
-        node_1, _, node_2 = node.split_node()
-        self.add_two_node_as_child(node_1)
-        self.add_two_node_as_child(node_2)
+        else:
+            # node_l_key < key < node_r_key
+            # split node
+            node_1, _, node_2 = node.split_node()
+            self.tree_right = node_1
+            self.tree_left = node_2
 
     def get_children_json(self, json):
         if self.tree_left:
