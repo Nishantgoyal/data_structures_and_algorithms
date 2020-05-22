@@ -17,6 +17,19 @@ class Node:
         '''
         raise "Please implement method 'get_children'"
 
+    def get_children_json(self, json):
+        '''
+            Abstract
+        '''
+        raise "Please implement method 'get_children_json'"
+
+    def print_tree(self):
+        tree = {}
+        tree["node"] = str(self)
+        self.get_children_json(tree)
+        print(tree)
+        return tree
+
 
 class TwoNode(Node):
     '''
@@ -71,6 +84,12 @@ class TwoNode(Node):
         self.add_two_node_as_child(node_1)
         self.add_two_node_as_child(node_2)
 
+    def get_children_json(self, json):
+        if self.tree_left:
+            json["L"] = self.tree_left
+        if self.tree_right:
+            json["R"] = self.tree_right
+
 
 class ThreeNode(Node):
     '''
@@ -122,70 +141,64 @@ class ThreeNode(Node):
         return l_node, None, r_node
 
     def add_three_node_as_child(self, node):
-        '''
-            keys: 
-                - l_key < r_key
-                - node_l_key < node_r_key
-            Cases:
-              1 r_key < node_l_key
-                - add as right child
-
-              2 l_key < node_l_key < r_key < node_r_key
-                - split node
-                - add l_node as mid child
-                - add r_node as right child
-
-              3 l_key < node_l_key and node_r_key < r_key
-                - add node as mid child
-
-              4 node_l_key < l_key and r_key < node_r_key
-                - split node
-                - add l_node as left child
-                - add r_node as right child
-
-              5 node_l_key < l_key < node_r_key < r_key
-                - split node
-                - add l_node as left child
-                - add r_node as mid child
-
-              6 node_r_key < l_key
-                - add node as left child
-        '''
         node_l_key = node.l_key
         node_r_key = node.r_key
+        node_l, _, node_r = node.split_node()
         if self.r_key < node_l_key:
             # Case 1: r_key < node_l_key
-            pass
+            # - add as right child
+            self.tree_right = node
 
         elif self.l_key < node_l_key and node_l_key < self.r_key and self.r_key < node_r_key:
             # Case 2: l_key < node_l_key < r_key < node_r_key
-            pass
+            # - split node
+            # - add l_node as mid child
+            # - add r_node as right child
+            self.tree_mid = node_l
+            self.tree_right = node_r
 
         elif self.l_key < node_l_key and node_r_key < self.r_key:
             # Case 3: l_key < node_l_key and node_r_key < r_key
-            pass
+            # - add node as mid child
+            self.tree_mid = node
 
         elif node_l_key < self.l_key and self.r_key < node_r_key:
             # Case 4: node_l_key < l_key and r_key < node_r_key
-            pass
+            # - split node
+            # - add l_node as left child
+            # - add r_node as right child
+            self.tree_left = node_l
+            self.tree_right = node_r
 
         elif node_l_key < self.l_key and self.l_key < node_r_key and node_r_key < self.r_key:
             # Case 5: node_l_key < l_key < node_r_key < r_key
-            pass
+            # - split node
+            # - add l_node as left child
+            # - add r_node as mid child
+            self.tree_left = node_l
+            self.tree_mid = node_r
 
         elif node_l_key < self.l_key:
             # Case 6: node_r_key < l_key
-            pass
+            # - add node as left child
+            self.tree_left = node
+
+    def get_children_json(self, json):
+        if self.tree_left:
+            json["L"] = self.tree_left
+        if self.tree_right:
+            json["R"] = self.tree_right
+        if self.tree_mid:
+            json["M"] = self.tree_mid
 
 
 if __name__ == "__main__":
-    # tn = ThreeNode(2, 3)
-    tn = TwoNode(12)
+    tn = ThreeNode(12, 23)
+    # tn = TwoNode(12)
     # print(tn.is_leaf())
     t1 = TwoNode(3)
-    t2 = ThreeNode(1, 2)
+    t2 = ThreeNode(1, 20)
 
     tn.add_three_node_as_child(t2)
 
-    print(tn)
-    print(tn.get_children())
+    tn.print_tree()
