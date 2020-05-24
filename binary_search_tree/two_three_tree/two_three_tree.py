@@ -18,7 +18,11 @@ class TwoThreeTree:
             self.root.print_tree()
 
     def insert(self, key):
+        print("Inserting into the Two Three Tree...")
         if self.root is None:
+            print("Root Node is empty. Inserting into Root...")
             self.root = TwoNode(key)
         else:
-            self.root.insert_key(key)
+            print("Tree before Insert:")
+            self.root.print_tree()
+            self.root = self.root.insert_key(key)

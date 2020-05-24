@@ -33,6 +33,8 @@ class Node:
         raise "Please implement method 'add_three_node_as_child'"
 
     def add_child(self, child):
+        if child is None:
+            return
         print("Type of child: {} is {}".format(child, child.type_of_node()))
         if child.type_of_node() == "TwoNode":
             self.add_two_node_as_child(child)
@@ -121,9 +123,13 @@ class TwoNode(Node):
 
     def get_children_json(self, json):
         if self.tree_left:
-            json["L"] = self.tree_left
+            json["L"] = {}
+            json["L"]["node"] = self.tree_left
+            self.tree_left.get_children_json(json["L"])
         if self.tree_right:
-            json["R"] = self.tree_right
+            json["R"] = {}
+            json["R"]["node"] = self.tree_right
+            self.tree_right.get_children_json(json["R"])
 
     def convert_to_three_node(self, key):
         print("Converting node: {} into three node with key: {}".format(self, key))
@@ -155,7 +161,7 @@ class TwoNode(Node):
                     - Create 2-Node Right Child with key
             Returns the node after insertion is complete
         '''
-        print("Inserting key: {} in Node: {}".format(key, self))
+        print("Inserting key: {} in Two-Node: {}".format(key, self))
         if self.is_leaf():
             print("Node is a leaf")
             self = self.convert_to_three_node(key)
@@ -274,7 +280,9 @@ class ThreeNode(Node):
                     - l_node.tree_right = node.tree_mid
                     - r_node.tree_right = node.tree_right
         '''
+        print("Splitting Three-Node: {} with key: {}".format(self, key))
         if key < self.l_key:
+            print("key: {} < l_key: {}".format(key, self.l_key))
             l_node = TwoNode(key)
             mid = self.l_key
             r_node = TwoNode(self.r_key)
@@ -282,6 +290,8 @@ class ThreeNode(Node):
             r_node.add_child(self.tree_mid)
             r_node.add_child(self.tree_right)
         elif self.l_key < key < self.r_key:
+            print("l_key: {} < key: {} < r_key: {}".format(
+                self.l_key, key, self.r_key))
             l_node = TwoNode(self.l_key)
             mid = key
             r_node = TwoNode(self.r_key)
@@ -303,12 +313,15 @@ class ThreeNode(Node):
                     elif self.tree_mid.r_key < key:
                         l_node.add_child(self.tree_mid)
         elif self.r_key < key:
+            print("r_key: {} < key: {}".format(self.r_key, key))
             l_node = TwoNode(self.l_key)
             mid = self.r_key
             r_node = TwoNode(key)
             l_node.add_child(self.tree_left)
             r_node.add_child(self.tree_mid)
             r_node.add_child(self.tree_right)
+        print("Three Node: {} is split into {}, {}, {}".format(
+            self, l_node, mid, r_node))
         return l_node, mid, r_node
 
     def add_three_node_as_child(self, node):
@@ -356,11 +369,17 @@ class ThreeNode(Node):
 
     def get_children_json(self, json):
         if self.tree_left:
-            json["L"] = self.tree_left
+            json["L"] = {}
+            json["L"]["node"] = self.tree_left
+            self.tree_left.get_children_json(json["L"])
         if self.tree_right:
-            json["R"] = self.tree_right
+            json["R"] = {}
+            json["R"]["node"] = self.tree_right
+            self.tree_right.get_children_json(json["R"])
         if self.tree_mid:
-            json["M"] = self.tree_mid
+            json["M"] = {}
+            json["M"]["node"] = self.tree_mid
+            self.tree_mid.get_children_json(json["M"])
 
     def insert_key(self, key):
         '''
@@ -404,16 +423,20 @@ class ThreeNode(Node):
                         - create a 2-Node with key
                         - insert the 2-Node in right tree
         '''
-        print("Inserting key: {} in Node: {}".format(key, self))
+        print("Inserting key: {} in Three-Node: {}".format(key, self))
         if self.is_leaf():
             print("Node is a leaf")
             l_node, mid, r_node = self.split_node_with_key(key)
+            print("Node: {} is split into {}, {}, {}".format(
+                self, l_node, mid, r_node))
             if not self.parent:
+                print("Node: {} does not have parents".format(self))
                 mid_node = TwoNode(mid)
                 mid_node.add_child(l_node)
                 mid_node.add_child(r_node)
                 return mid_node
             else:
+                print("Node: {} has parents".format(self))
                 if self.parent.type_of_node() == "TwoNode":
                     self.parent = self.parent.convert_to_three_node(key)
                 else:
