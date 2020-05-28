@@ -1,4 +1,13 @@
-class Node:
+class TwoNode:
+
+    def __init__(self, key):
+        self.key = key
+        self.tree_left = None
+        self.tree_right = None
+
+    def __repr__(self):
+        return "({})".format(self.key)
+
     def type_of_node(self):
         return str(self.__class__).split(".")[1].split("'")[0]
 
@@ -38,17 +47,6 @@ class Node:
         elif self.type_of_node() == "ThreeNode":
             if node == self.tree_mid:
                 self.tree_mid = new_node
-
-
-class TwoNode(Node):
-
-    def __init__(self, key, parent=None):
-        self.key = key
-        self.tree_left = None
-        self.tree_right = None
-
-    def __repr__(self):
-        return "({})".format(self.key)
 
     def get_children(self):
         return [self.tree_left, self.tree_right]
@@ -104,9 +102,9 @@ class TwoNode(Node):
         return node
 
 
-class ThreeNode(Node):
+class ThreeNode:
 
-    def __init__(self, l_key, r_key, parent=None):
+    def __init__(self, l_key, r_key):
         self.l_key = l_key
         self.r_key = r_key
         self.tree_left = None
@@ -115,6 +113,46 @@ class ThreeNode(Node):
 
     def __repr__(self):
         return "({},{})".format(self.l_key, self.r_key)
+
+    def type_of_node(self):
+        return str(self.__class__).split(".")[1].split("'")[0]
+
+    def is_leaf(self):
+        return [ele for ele in self.get_children() if ele is not None] == []
+
+    def add_child(self, child):
+        if child is None:
+            return
+        print("Adding Child: {} to Node: {}".format(child, self))
+        if child.type_of_node() == "TwoNode":
+            self.add_two_node_as_child(child)
+        else:
+            self.add_three_node_as_child(child)
+
+    def print_tree(self):
+        tree = {}
+        tree["node"] = str(self)
+        self.get_children_json(tree)
+        print(tree)
+        return tree
+
+    def add_child_to_node(self, node):
+        children = self.get_children()
+        print("Node: {} has children: {}".format(self, children))
+        for child in children:
+            if child:
+                print("Appending child: {} of type: {} to Node: {}".format(
+                    child, child.type_of_node(), node))
+                node.add_child(child)
+
+    def replace_node(self, node, new_node):
+        if node == self.tree_left:
+            self.tree_left = new_node
+        elif node == self.tree_right:
+            self.tree_right = new_node
+        elif self.type_of_node() == "ThreeNode":
+            if node == self.tree_mid:
+                self.tree_mid = new_node
 
     def get_children(self):
         return [self.tree_left, self.tree_mid, self.tree_right]
@@ -202,7 +240,7 @@ class ThreeNode(Node):
         return node
 
 
-class FourNode(Node):
+class FourNode:
 
     def __init__(self, l_key, m_key, r_key):
         self.l_key = l_key
@@ -216,18 +254,23 @@ class FourNode(Node):
     def __repr__(self):
         return "({},{},{})".format(self.l_key, self.m_key, self.r_key)
 
-    def get_children(self):
-        return [self.tree_left, self.tree_mid_1, self.tree_mid_2, self.tree_right]
+    def add_child(self, child):
+        if child is None:
+            return
+        print("Adding Child: {} to Node: {}".format(child, self))
+        if child.type_of_node() == "TwoNode":
+            self.add_two_node_as_child(child)
+        else:
+            self.add_three_node_as_child(child)
 
-    def add_two_node_as_child(self, node):
-        if node.key < self.l_key:
-            self.tree_left = node
-        elif self.l_key < node.key < self.m_key:
-            self.tree_mid_1 = node
-        elif self.m_key < node.key < self.r_key:
-            self.tree_mid_2 = node
-        elif self.r_key < node.key:
-            self.tree_right = node
+    def add_child_to_node(self, node):
+        children = self.get_children()
+        print("Node: {} has children: {}".format(self, children))
+        for child in children:
+            if child:
+                print("Appending child: {} of type: {} to Node: {}".format(
+                    child, child.type_of_node(), node))
+                node.add_child(child)
 
     def add_three_node_as_child(self, node):
         node_l, node_r = node.split_node()
@@ -257,6 +300,41 @@ class FourNode(Node):
             self.tree_right = node_r
         elif self.l_key < self.m_key < self.r_key < node.l_key < node.r_key:
             self.tree_right = node
+
+    def add_two_node_as_child(self, node):
+        if node.key < self.l_key:
+            self.tree_left = node
+        elif self.l_key < node.key < self.m_key:
+            self.tree_mid_1 = node
+        elif self.m_key < node.key < self.r_key:
+            self.tree_mid_2 = node
+        elif self.r_key < node.key:
+            self.tree_right = node
+
+    def get_children(self):
+        return [self.tree_left, self.tree_mid_1, self.tree_mid_2, self.tree_right]
+
+    def is_leaf(self):
+        return [ele for ele in self.get_children() if ele is not None] == []
+
+    def print_tree(self):
+        tree = {}
+        tree["node"] = str(self)
+        self.get_children_json(tree)
+        print(tree)
+        return tree
+
+    def type_of_node(self):
+        return str(self.__class__).split(".")[1].split("'")[0]
+
+    def replace_node(self, node, new_node):
+        if node == self.tree_left:
+            self.tree_left = new_node
+        elif node == self.tree_right:
+            self.tree_right = new_node
+        elif self.type_of_node() == "ThreeNode":
+            if node == self.tree_mid:
+                self.tree_mid = new_node
 
     def get_children_json(self, json):
         if self.tree_left:
