@@ -12,6 +12,7 @@ class Node:
          - get_children
          - get_children_json
          - insert_key
+         - replace node
     '''
 
     def type_of_node(self):
@@ -66,6 +67,17 @@ class Node:
             Abstract
         '''
         raise "Please implement method 'insert_key'"
+
+    def replace_node(self, node_to_replace):
+        parent = self.parent
+        node_to_replace.parent = parent
+        if self == parent.tree_left:
+            parent.tree_left = node_to_replace
+        if self == parent.tree_right:
+            parent.tree_right = node_to_replace
+        if parent.type_of_node() == "ThreeNode":
+            if parent.tree_mid == self:
+                parent.tree_mid = self
 
 
 class TwoNode(Node):
@@ -142,6 +154,14 @@ class TwoNode(Node):
             print("Appending child: {} of type: {} to Node: {}".format(
                 child, child.type_of_node(), three_node))
             three_node.add_child(child)
+        # if self == parent.tree_left:
+        #     parent.tree_left = three_node
+        # elif self == parent.tree_right:
+        #     parent.tree_right = three_node
+        # elif parent.type_of_node() == "ThreeNode":
+        #     if self == parent.tree_mid:
+        #         parent.tree_mid = three_node
+        # three_node.parent = self.parent
         # three_node.print_tree()
         return three_node
 
@@ -162,24 +182,26 @@ class TwoNode(Node):
             Returns the node after insertion is complete
         '''
         print("Inserting key: {} in Two-Node: {}".format(key, self))
-        if self.is_leaf():
-            print("Node is a leaf")
-            self = self.convert_to_three_node(key)
-        else:
-            print("Node has children")
-            if key < self.key:
-                if self.tree_left:
-                    self.tree_left = self.tree_left.insert_key(key)
-                else:
-                    node = TwoNode(key)
-                    self.add_child(node)
-            elif key > self.key:
-                if self.tree_right:
-                    self.tree_right = self.tree_right.insert_key(key)
-                else:
-                    node = TwoNode(key)
-                    self.add_child(node)
-        return self
+        node = self.convert_to_three_node(key)
+        return node
+        # if self.is_leaf():
+        #     print("Node is a leaf")
+        #     self = self.convert_to_three_node(key)
+        # else:
+        #     print("Node has children")
+        #     if key < self.key:
+        #         if self.tree_left:
+        #             self.tree_left = self.tree_left.insert_key(key)
+        #         else:
+        #             node = TwoNode(key)
+        #             self.add_child(node)
+        #     elif key > self.key:
+        #         if self.tree_right:
+        #             self.tree_right = self.tree_right.insert_key(key)
+        #         else:
+        #             node = TwoNode(key)
+        #             self.add_child(node)
+        # return self
 
 
 class ThreeNode(Node):
@@ -424,43 +446,44 @@ class ThreeNode(Node):
                         - insert the 2-Node in right tree
         '''
         print("Inserting key: {} in Three-Node: {}".format(key, self))
-        if self.is_leaf():
-            print("Node is a leaf")
-            l_node, mid, r_node = self.split_node_with_key(key)
-            print("Node: {} is split into {}, {}, {}".format(
-                self, l_node, mid, r_node))
-            if not self.parent:
-                print("Node: {} does not have parents".format(self))
-                mid_node = TwoNode(mid)
-                mid_node.add_child(l_node)
-                mid_node.add_child(r_node)
-                return mid_node
-            else:
-                print("Node: {} has parents".format(self))
-                if self.parent.type_of_node() == "TwoNode":
-                    self.parent = self.parent.convert_to_three_node(key)
-                else:
-                    self.parent = self.parent.insert_key(key)
+        l_node, mid, r_node = self.split_node_with_key(key)
+        print("Node: {} is split into {}, {}, {}".format(
+            self, l_node, mid, r_node))
+        if not self.parent:
+            print("Node: {} does not have parents".format(self))
+            mid_node = TwoNode(mid)
+            mid_node.add_child(l_node)
+            mid_node.add_child(r_node)
+            return mid_node
         else:
-            print("Node has children")
-            if key < self.l_key:
-                if self.tree_left:
-                    self.tree_left = self.tree_left.insert_key(key)
-                else:
-                    node = TwoNode(key)
-                    self.add_three_node_as_child(node)
-            elif self.l_key < key < self.r_key:
-                if self.tree_mid:
-                    self.tree_mid = self.tree_mid.insert_key(key)
-                else:
-                    node = TwoNode(key)
-                    self.add_three_node_as_child(node)
-            elif self.r_key < key:
-                if self.tree_right:
-                    self.tree_right = self.tree_right.insert_key(key)
-                else:
-                    node = TwoNode(key)
-                    self.add_three_node_as_child(node)
+            print("Node: {} has parents".format(self))
+            if self.parent.type_of_node() == "TwoNode":
+                three_node = self.parent.convert_to_three_node(mid)
+                self.replace_node(three_node)
+                # three_node.add_child(self)
+                # self.parent = self.parent.convert_to_three_node(key)
+            else:
+                self.parent = self.parent.insert_key(mid)
+        # else:
+        #     print("Node has children")
+        #     if key < self.l_key:
+        #         if self.tree_left:
+        #             self.tree_left = self.tree_left.insert_key(key)
+        #         else:
+        #             node = TwoNode(key)
+        #             self.add_three_node_as_child(node)
+        #     elif self.l_key < key < self.r_key:
+        #         if self.tree_mid:
+        #             self.tree_mid = self.tree_mid.insert_key(key)
+        #         else:
+        #             node = TwoNode(key)
+        #             self.add_three_node_as_child(node)
+        #     elif self.r_key < key:
+        #         if self.tree_right:
+        #             self.tree_right = self.tree_right.insert_key(key)
+        #         else:
+        #             node = TwoNode(key)
+        #             self.add_three_node_as_child(node)
         return self
 
 
