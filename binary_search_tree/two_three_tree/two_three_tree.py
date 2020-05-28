@@ -3,11 +3,6 @@ import json
 
 
 class TwoThreeTree:
-    '''
-        APIs:
-            - __init__
-            - print_tree
-    '''
 
     def __init__(self):
         self.root = None
@@ -21,7 +16,7 @@ class TwoThreeTree:
     def dump_json(self, data):
         fn = "{}_data.json".format(__name__.split(".")[0])
         with open(fn, "w") as f:
-            json.dump(data, fn, indent=4)
+            json.dump(data, f, indent=4)
 
     def insert(self, key):
         print("Inserting into the Two Three Tree...")
@@ -31,11 +26,11 @@ class TwoThreeTree:
         else:
             print("Tree before Insert:")
             self.root.print_tree()
-            # self.root = self.root.insert_key(key)
             chain = []
             parent = None
             node = self.root
             while not node.is_leaf():
+                print("Traversing Node: {}".format(node))
                 parent = node
                 chain.append(node)
                 if node.type_of_node() == "TwoNode":
@@ -49,6 +44,8 @@ class TwoThreeTree:
                         if node is None:
                             node.tree_right = TwoNode(key)
                             return
+                    else:
+                        return
                 else:
                     if key < node.l_key:
                         node = node.tree_left
@@ -65,17 +62,22 @@ class TwoThreeTree:
                         if node is None:
                             node.tree_right = TwoNode(key)
                             return
+                    else:
+                        return
+            print("Inserting into Node: {}".format(node))
             new_node = node.insert_key(key)
+            if new_node is None:
+                return
             if parent is None:
                 self.root = new_node
                 # return
             else:
                 parent.replace_node(node, new_node)
             print("Tree after Insert:")
-            self.root.print_tree()
             chain.append(new_node)
             self.dilute_chain(chain)
-            # data = self.root.get_children_json()
+            data = self.root.print_tree()
+            self.dump_json(data)
 
     def dilute_chain(self, chain):
         print("Chain: {}".format(chain))

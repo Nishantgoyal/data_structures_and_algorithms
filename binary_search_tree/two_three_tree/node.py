@@ -1,59 +1,18 @@
 class Node:
-    '''
-        Methods
-         - type_of_node
-         - is_leaf
-         - add_child
-         - print_tree
-
-        Abstract
-         - add_two_node_as_child
-         - add_three_node_as_child
-         - get_children
-         - get_children_json
-         - insert_key
-         - replace node
-    '''
-
     def type_of_node(self):
         return str(self.__class__).split(".")[1].split("'")[0]
 
     def is_leaf(self):
         return [ele for ele in self.get_children() if ele is not None] == []
 
-    def add_two_node_as_child(self, node):
-        '''
-            Abstract
-        '''
-        raise "Please implement method 'add_two_node_as_child'"
-
-    def add_three_node_as_child(self, node):
-        '''
-            Abstract
-        '''
-        raise "Please implement method 'add_three_node_as_child'"
-
     def add_child(self, child):
         if child is None:
             return
         print("Adding Child: {} to Node: {}".format(child, self))
-        # print("Type of child: {} is {}".format(child, child.type_of_node()))
         if child.type_of_node() == "TwoNode":
             self.add_two_node_as_child(child)
         else:
             self.add_three_node_as_child(child)
-
-    def get_children(self):
-        '''
-            Abstract
-        '''
-        raise "Please implement method 'get_children'"
-
-    def get_children_json(self, json):
-        '''
-            Abstract
-        '''
-        raise "Please implement method 'get_children_json'"
 
     def print_tree(self):
         tree = {}
@@ -61,12 +20,6 @@ class Node:
         self.get_children_json(tree)
         print(tree)
         return tree
-
-    def insert_key(self, key):
-        '''
-            Abstract
-        '''
-        raise "Please implement method 'insert_key'"
 
     def add_child_to_node(self, node):
         children = self.get_children()
@@ -88,17 +41,6 @@ class Node:
 
 
 class TwoNode(Node):
-    '''
-        Methods
-         - __init__
-         - __repr__
-         - get_children
-         - add_two_node_as_child
-         - add_three_node_as_child
-         - get_children_json
-         - convert into three node
-         - insert_key
-    '''
 
     def __init__(self, key, parent=None):
         self.key = key
@@ -131,11 +73,11 @@ class TwoNode(Node):
     def get_children_json(self, json):
         if self.tree_left:
             json["L"] = {}
-            json["L"]["node"] = self.tree_left
+            json["L"]["node"] = str(self.tree_left)
             self.tree_left.get_children_json(json["L"])
         if self.tree_right:
             json["R"] = {}
-            json["R"]["node"] = self.tree_right
+            json["R"]["node"] = str(self.tree_right)
             self.tree_right.get_children_json(json["R"])
 
     def promote(self, key):
@@ -148,26 +90,21 @@ class TwoNode(Node):
             raise "Key already present in the node"
         return three_node
 
+    def key_in_node(self, key):
+        if key == self.key:
+            return True
+        return False
+
     def insert_key(self, key):
         print("Inserting key: {} in Two-Node: {}".format(key, self))
+        if self.key_in_node(key):
+            return
         node = self.promote(key)
         self.add_child_to_node(node)
         return node
 
 
 class ThreeNode(Node):
-    '''
-        Methods
-         - __init__
-         - __repr__
-         - get_children
-         - add_two_node_as_child
-         - split_node
-         - split_node_with_key
-         - add_three_node_as_child
-         - get_children_json
-         - insert_key
-    '''
 
     def __init__(self, l_key, r_key, parent=None):
         self.l_key = l_key
@@ -224,16 +161,16 @@ class ThreeNode(Node):
     def get_children_json(self, json):
         if self.tree_left:
             json["L"] = {}
-            json["L"]["node"] = self.tree_left
+            json["L"]["node"] = str(self.tree_left)
             self.tree_left.get_children_json(json["L"])
-        if self.tree_right:
-            json["R"] = {}
-            json["R"]["node"] = self.tree_right
-            self.tree_right.get_children_json(json["R"])
         if self.tree_mid:
             json["M"] = {}
-            json["M"]["node"] = self.tree_mid
+            json["M"]["node"] = str(self.tree_mid)
             self.tree_mid.get_children_json(json["M"])
+        if self.tree_right:
+            json["R"] = {}
+            json["R"]["node"] = str(self.tree_right)
+            self.tree_right.get_children_json(json["R"])
 
     def promote(self, key):
         print("Converting Three-Node: {} with key: {} into a Temporary Four Node".format(self, key))
@@ -249,26 +186,23 @@ class ThreeNode(Node):
             f_node = FourNode(self.l_key, self.r_key, key)
         return f_node
 
+    def key_in_node(self, key):
+        if key == self.l_key:
+            return True
+        if key == self.r_key:
+            return True
+        return False
+
     def insert_key(self, key):
         print("Inserting key: {} in Three-Node: {}".format(key, self))
+        if self.key_in_node(key):
+            return None
         node = self.promote(key)
         self.add_child_to_node(node)
         return node
 
 
 class FourNode(Node):
-    '''
-        Methods
-         - __init__
-         - __repr__
-         - get_children
-         - add_two_node_as_child
-         - split_node
-         - split_node_with_key
-         - add_three_node_as_child
-         - get_children_json
-         - insert_key
-    '''
 
     def __init__(self, l_key, m_key, r_key):
         self.l_key = l_key
