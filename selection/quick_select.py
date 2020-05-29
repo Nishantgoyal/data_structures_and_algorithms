@@ -1,66 +1,87 @@
+import sys
+
+
 class Select:
     def __init__(self, array):
         self.arr = array
 
     def select(self, k):
         ''' To find the kth element of the array '''
+        l = len(self.arr)
         left = 0
-        right = len(self.arr) - 1
-        if k > right + 1:
+        right = l - 1
+        k = l - k
+        print("left: {} right: {} k: {}".format(left, right, k))
+        if k > l:
             raise ("Value of k should be less than or equal to length of array")
-        if k < 0:
-            raise ("k cannot be negative")
+        if k <= left:
+            raise ("k cannot be zero or negative")
         while left <= right:
+            print("In Select loop: {} < {}".format(left, right))
             # This will put A[left] at jth place and for all i < j A[i] <= A[j] and for all i > j A[i] > A[j]
             j = self.partition(left, right)
             if j == k:
+                print("In select. j:{} == k:{}".format(j, k))
                 return self.arr[j]
             if j < k:
+                print("In select. j:{} < k:{}".format(j, k))
                 left = j + 1
                 k = k - j
             else:
+                print("In select. j:{} > k:{}".format(j, k))
                 right = j - 1
+            # break
 
     def swap(self, i, j):
-        # print("Swapping ele A[i]: {} at i: {} and ele A[j] {} at j: {}".format(
-        #     self.arr[i], i, self.arr[j], j))
+        print("Swapping ele A[i]: {} at i: {} and ele A[j]: {} at j: {}".format(
+            self.arr[i], i, self.arr[j], j))
         self.arr[i], self.arr[j] = self.arr[j], self.arr[i]
         # print("Array after swap: {}".format(self.arr))
 
     def partition(self, left, right):
-        i = left
-        j = right + 1
+        print("Partitioning: left: {} right: {}".format(left, right))
+        i = left + 1
+        j = right
+        print("Choosen element: {}".format(self.arr[left]))
         while True:
-            # print(self.arr)
+            print("In partition loop: i:{} j:{}".format(i, j))
+            print("Array: {}".format(self.arr))
             # print(i, j)
             # print(left, right)
             # print(self.arr[left])
             # print("true")
             # if i >= j:
             #     break
-            i += 1
+            # i += 1
             if i < right:
                 while self.arr[i] < self.arr[left]:
-                    # print("i:{}".format(i))
+                    print("i:{} arr_i: {} < arr_left: {}".format(
+                        i, self.arr[i], self.arr[left]))
                     i += 1
                     if i == right:
                         break
-            j -= 1
+            # j -= 1
             if j > left:
                 while self.arr[j] > self.arr[left]:
-                    # print("j:{}".format(j))
+                    print("while j:{} arr_j: {} > arr_left: {}".format(
+                        j, self.arr[j], self.arr[left]))
                     j -= 1
+                    print("\tj:{}".format(j))
                     if j == left:
+                        print("Breaking j: {}".format(j))
                         break
+                print("inner loop break j:{} arr_j: {} <= arr_left: {}".format(
+                    j, self.arr[j], self.arr[left]))
             if i >= j:
                 break
             self.swap(i, j)
+        print("out of loop: i:{} j: {}".format(i, j))
         self.swap(left, j)
+        print(self.arr)
         return j
 
 
 if __name__ == "__main__":
-    arr = ["3", "43", "23", "56", "57", "72"]
+    arr = [3, 43, 23, 56, 57, 72]
     s = Select(arr)
-    print(s.select(2))
-p
+    print(s.select(int(sys.argv[1])))
