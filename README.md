@@ -2,12 +2,20 @@
 
 The repo contains my learning and implementation of various basic algorithms.
 
+## Data Structures
+
 - Stacks
   - linked list implementation
   - array implementation
 - Queues
   - linked list implementation
   - array implementation
+- Binary Heap
+  - Min/Max
+  - Median (WIP)
+
+## Algorithms
+
 - Search
   - brute search
   - binary search
@@ -20,6 +28,7 @@ The repo contains my learning and implementation of various basic algorithms.
   - Shell Sort
   - Merge Sort
   - Quick Sort
+  - Quick Sort with 3-way partitioning
 - prime number
   - all_primes_till_N
 - Union Find
@@ -31,3 +40,7 @@ The repo contains my learning and implementation of various basic algorithms.
   - triple sum in quadratic run time
 - Convex Hull
   - Graham Scan (WIP)
+
+## Random
+
+- Taxicab Numbers
