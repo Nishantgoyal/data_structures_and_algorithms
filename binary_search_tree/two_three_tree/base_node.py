@@ -49,3 +49,9 @@ class Node:
                 json[key] = {}
                 json[key]["node"] = self.trees[key]
                 self.trees[key].get_children_json(json[key])
+
+    def get_children(self):
+        children = []
+        for key in self.trees:
+            children.append(self.trees[key])
+        return children
