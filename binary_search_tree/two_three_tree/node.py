@@ -12,15 +12,6 @@ class TwoNode(Node):
     def __repr__(self):
         return "({})".format(self.key)
 
-    def replace_node(self, node, new_node):
-        if node == self.trees["left"]:
-            self.trees["left"] = new_node
-        elif node == self.trees["right"]:
-            self.trees["right"] = new_node
-        elif self.type_of_node() == "ThreeNode":
-            if node == self.trees["mid"]:
-                self.trees["mid"] = new_node
-
     def get_children(self):
         return [self.trees["left"], self.trees["right"]]
 
@@ -86,15 +77,6 @@ class ThreeNode(Node):
 
     def __repr__(self):
         return "({},{})".format(self.l_key, self.r_key)
-
-    def replace_node(self, node, new_node):
-        if node == self.trees["left"]:
-            self.trees["left"] = new_node
-        elif node == self.trees["right"]:
-            self.trees["right"] = new_node
-        elif self.type_of_node() == "ThreeNode":
-            if node == self.trees["mid"]:
-                self.trees["mid"] = new_node
 
     def get_children(self):
         return [self.trees["left"], self.trees["mid"], self.trees["right"]]
@@ -236,15 +218,6 @@ class FourNode(Node):
 
     def get_children(self):
         return [self.trees["left"], self.trees["mid_1"], self.trees["mid_2"], self.trees["right"]]
-
-    def replace_node(self, node, new_node):
-        if node == self.trees["left"]:
-            self.trees["left"] = new_node
-        elif node == self.trees["right"]:
-            self.trees["right"] = new_node
-        elif self.type_of_node() == "ThreeNode":
-            if node == self.trees["mid"]:
-                self.trees["mid"] = new_node
 
     def get_children_json(self, json):
         if self.trees["left"]:

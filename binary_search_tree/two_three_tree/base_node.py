@@ -1,4 +1,6 @@
 class Node:
+    def __init__(self):
+        self.trees = {}
 
     def type_of_node(self):
         return str(self.__class__).split(".")[1].split("'")[0]
@@ -33,3 +35,10 @@ class Node:
                 print("Appending child: {} of type: {} to Node: {}".format(
                     child, child.type_of_node(), node))
                 node.add_child(child)
+
+    def replace_node(self, node, new_node):
+        for key in self.trees:
+            if self.trees[key] is not None:
+                if self.trees[key] == node:
+                    self.trees[key] = new_node
+                    return
