@@ -53,9 +53,9 @@ class TwoThreeTree:
                             node.trees["left"] = TwoNode(key)
                             return
                     elif node.l_key < key < node.r_key:
-                        node = node.tree_mid
+                        node = node.trees["mid"]
                         if node is None:
-                            node.tree_mid = TwoNode(key)
+                            node.trees["mid"] = TwoNode(key)
                             return
                     elif key > node.r_key:
                         node = node.trees["right"]
