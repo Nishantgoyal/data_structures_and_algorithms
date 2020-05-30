@@ -18,10 +18,13 @@ class TwoNode:
         if child is None:
             return
         print("Adding Child: {} to Node: {}".format(child, self))
-        if child.type_of_node() == "TwoNode":
+        child_type = child.type_of_node()
+        if child_type == "TwoNode":
             self.add_two_node_as_child(child)
-        else:
+        elif child_type == "ThreeNode":
             self.add_three_node_as_child(child)
+        else:
+            raise "Unable to add child of type: {}".format(child_type)
 
     def print_tree(self):
         tree = {}
