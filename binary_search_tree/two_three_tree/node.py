@@ -5,6 +5,9 @@ class TwoNode(Node):
 
     def __init__(self, key):
         self.key = key
+        self.trees = {
+            "left": None, "right": None
+        }
         self.tree_left = None
         self.tree_right = None
 
@@ -79,6 +82,9 @@ class ThreeNode(Node):
     def __init__(self, l_key, r_key):
         self.l_key = l_key
         self.r_key = r_key
+        self.trees = {
+            "left": None, "mid": None, "right": None
+        }
         self.tree_left = None
         self.tree_mid = None
         self.tree_right = None
@@ -187,6 +193,9 @@ class FourNode(Node):
         self.l_key = l_key
         self.m_key = m_key
         self.r_key = r_key
+        self.trees = {
+            "left": None, "mid_1": None, "mid_2": None, "right": None
+        }
         self.tree_left = None
         self.tree_mid_1 = None
         self.tree_mid_2 = None
