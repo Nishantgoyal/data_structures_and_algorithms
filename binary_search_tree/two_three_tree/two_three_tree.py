@@ -35,9 +35,9 @@ class TwoThreeTree:
                 chain.append(node)
                 if node.type_of_node() == "TwoNode":
                     if key < node.key:
-                        node = node.tree_left
+                        node = node.trees["left"]
                         if node is None:
-                            node.tree_left = TwoNode(key)
+                            node.trees["left"] = TwoNode(key)
                             return
                     elif key > node.key:
                         node = node.tree_right
@@ -48,9 +48,9 @@ class TwoThreeTree:
                         return
                 else:
                     if key < node.l_key:
-                        node = node.tree_left
+                        node = node.trees["left"]
                         if node is None:
-                            node.tree_left = TwoNode(key)
+                            node.trees["left"] = TwoNode(key)
                             return
                     elif node.l_key < key < node.r_key:
                         node = node.tree_mid
