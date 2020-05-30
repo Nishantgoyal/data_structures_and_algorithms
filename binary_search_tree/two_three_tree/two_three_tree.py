@@ -77,7 +77,7 @@ class TwoThreeTree:
             chain.append(new_node)
             self.dilute_chain(chain)
             data = self.root.print_tree()
-            self.dump_json(data)
+            # self.dump_json(data)
 
     def dilute_chain(self, chain):
         print("Chain: {}".format(chain))

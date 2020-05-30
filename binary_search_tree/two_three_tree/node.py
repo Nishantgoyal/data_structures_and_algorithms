@@ -32,16 +32,6 @@ class TwoNode(Node):
         elif self.key < node.l_key:
             self.trees["right"] = node
 
-    def get_children_json(self, json):
-        if self.trees["left"]:
-            json["L"] = {}
-            json["L"]["node"] = str(self.trees["left"])
-            self.trees["left"].get_children_json(json["L"])
-        if self.trees["right"]:
-            json["R"] = {}
-            json["R"]["node"] = str(self.trees["right"])
-            self.trees["right"].get_children_json(json["R"])
-
     def promote(self, key):
         print("Converting node: {} into three node with key: {}".format(self, key))
         if key < self.key:
@@ -119,20 +109,6 @@ class ThreeNode(Node):
             self.trees["mid"] = node_r
         elif node_l_key < self.l_key:
             self.trees["left"] = node
-
-    def get_children_json(self, json):
-        if self.trees["left"]:
-            json["L"] = {}
-            json["L"]["node"] = str(self.trees["left"])
-            self.trees["left"].get_children_json(json["L"])
-        if self.trees["mid"]:
-            json["M"] = {}
-            json["M"]["node"] = str(self.trees["mid"])
-            self.trees["mid"].get_children_json(json["M"])
-        if self.trees["right"]:
-            json["R"] = {}
-            json["R"]["node"] = str(self.trees["right"])
-            self.trees["right"].get_children_json(json["R"])
 
     def promote(self, key):
         print("Converting Three-Node: {} with key: {} into a Temporary Four Node".format(self, key))
@@ -218,25 +194,6 @@ class FourNode(Node):
 
     def get_children(self):
         return [self.trees["left"], self.trees["mid_1"], self.trees["mid_2"], self.trees["right"]]
-
-    def get_children_json(self, json):
-        if self.trees["left"]:
-            json["L"] = {}
-            json["L"]["node"] = self.trees["left"]
-            self.trees["left"].get_children_json(json["L"])
-        if self.trees["right"]:
-            json["R"] = {}
-            json["R"]["node"] = self.trees["right"]
-            self.trees["right"].get_children_json(json["R"])
-        if self.trees["mid_1"]:
-            json["M_1"] = {}
-            json["M_1"]["node"] = self.trees["mid_1"]
-            self.trees["mid_1"].get_children_json(json["M_1"])
-
-        if self.trees["mid_2"]:
-            json["M_2"] = {}
-            json["M_2"]["node"] = self.trees["mid_2"]
-            self.trees["mid_2"].get_children_json(json["M_2"])
 
     def split_node(self):
         print("Splitting the node: {}".format(self))

@@ -42,3 +42,10 @@ class Node:
                 if self.trees[key] == node:
                     self.trees[key] = new_node
                     return
+
+    def get_children_json(self, json):
+        for key in self.trees:
+            if self.trees[key] is not None:
+                json[key] = {}
+                json[key]["node"] = self.trees[key]
+                self.trees[key].get_children_json(json[key])
