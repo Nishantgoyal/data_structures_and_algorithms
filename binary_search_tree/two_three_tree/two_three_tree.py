@@ -40,9 +40,9 @@ class TwoThreeTree:
                             node.trees["left"] = TwoNode(key)
                             return
                     elif key > node.key:
-                        node = node.tree_right
+                        node = node.trees["right"]
                         if node is None:
-                            node.tree_right = TwoNode(key)
+                            node.trees["right"] = TwoNode(key)
                             return
                     else:
                         return
@@ -58,9 +58,9 @@ class TwoThreeTree:
                             node.tree_mid = TwoNode(key)
                             return
                     elif key > node.r_key:
-                        node = node.tree_right
+                        node = node.trees["right"]
                         if node is None:
-                            node.tree_right = TwoNode(key)
+                            node.trees["right"] = TwoNode(key)
                             return
                     else:
                         return

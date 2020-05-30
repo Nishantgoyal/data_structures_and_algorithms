@@ -9,7 +9,7 @@ class TwoNode(Node):
             "left": None, "right": None
         }
         # self.trees["left"] = None
-        self.tree_right = None
+        # self.trees["right"] = None
 
     def __repr__(self):
         return "({})".format(self.key)
@@ -17,41 +17,41 @@ class TwoNode(Node):
     def replace_node(self, node, new_node):
         if node == self.trees["left"]:
             self.trees["left"] = new_node
-        elif node == self.tree_right:
-            self.tree_right = new_node
+        elif node == self.trees["right"]:
+            self.trees["right"] = new_node
         elif self.type_of_node() == "ThreeNode":
             if node == self.tree_mid:
                 self.tree_mid = new_node
 
     def get_children(self):
-        return [self.trees["left"], self.tree_right]
+        return [self.trees["left"], self.trees["right"]]
 
     def add_two_node_as_child(self, node):
         node_key = node.key
         if node_key < self.key:
             self.trees["left"] = node
         elif node_key > self.key:
-            self.tree_right = node
+            self.trees["right"] = node
 
     def add_three_node_as_child(self, node):
         if node.r_key < self.key:
             self.trees["left"] = node
         elif node.l_key < self.key < node.r_key:
             node_1, _, node_2 = node.split_node()
-            self.tree_right = node_1
+            self.trees["right"] = node_1
             self.trees["left"] = node_2
         elif self.key < node.l_key:
-            self.tree_right = node
+            self.trees["right"] = node
 
     def get_children_json(self, json):
         if self.trees["left"]:
             json["L"] = {}
             json["L"]["node"] = str(self.trees["left"])
             self.trees["left"].get_children_json(json["L"])
-        if self.tree_right:
+        if self.trees["right"]:
             json["R"] = {}
-            json["R"]["node"] = str(self.tree_right)
-            self.tree_right.get_children_json(json["R"])
+            json["R"]["node"] = str(self.trees["right"])
+            self.trees["right"].get_children_json(json["R"])
 
     def promote(self, key):
         print("Converting node: {} into three node with key: {}".format(self, key))
@@ -87,7 +87,7 @@ class ThreeNode(Node):
         }
         # self.trees["left"] = None
         self.tree_mid = None
-        self.tree_right = None
+        # self.trees["right"] = None
 
     def __repr__(self):
         return "({},{})".format(self.l_key, self.r_key)
@@ -95,14 +95,14 @@ class ThreeNode(Node):
     def replace_node(self, node, new_node):
         if node == self.trees["left"]:
             self.trees["left"] = new_node
-        elif node == self.tree_right:
-            self.tree_right = new_node
+        elif node == self.trees["right"]:
+            self.trees["right"] = new_node
         elif self.type_of_node() == "ThreeNode":
             if node == self.tree_mid:
                 self.tree_mid = new_node
 
     def get_children(self):
-        return [self.trees["left"], self.tree_mid, self.tree_right]
+        return [self.trees["left"], self.tree_mid, self.trees["right"]]
 
     def add_two_node_as_child(self, node):
         if node.key < self.l_key:
@@ -110,7 +110,7 @@ class ThreeNode(Node):
         elif self.l_key < node.key < self.r_key:
             self.tree_mid = node
         elif self.r_key < node.key:
-            self.tree_right = node
+            self.trees["right"] = node
 
     def split_node(self):
         print("Splitting the node: {}".format(self))
@@ -119,7 +119,7 @@ class ThreeNode(Node):
         l_node.add_child(self.tree_mid)
 
         r_node = TwoNode(self.r_key)
-        r_node.add_child(self.tree_right)
+        r_node.add_child(self.trees["right"])
 
         return l_node, None, r_node
 
@@ -128,15 +128,15 @@ class ThreeNode(Node):
         node_r_key = node.r_key
         node_l, _, node_r = node.split_node()
         if self.r_key < node_l_key:
-            self.tree_right = node
+            self.trees["right"] = node
         elif self.l_key < node_l_key < self.r_key < node_r_key:
             self.tree_mid = node_l
-            self.tree_right = node_r
+            self.trees["right"] = node_r
         elif self.l_key < node_r_key < self.r_key:
             self.tree_mid = node
         elif node_l_key < self.l_key and self.r_key < node_r_key:
             self.trees["left"] = node_l
-            self.tree_right = node_r
+            self.trees["right"] = node_r
         elif node_l_key < self.l_key < node_r_key < self.r_key:
             self.trees["left"] = node_l
             self.tree_mid = node_r
@@ -152,10 +152,10 @@ class ThreeNode(Node):
             json["M"] = {}
             json["M"]["node"] = str(self.tree_mid)
             self.tree_mid.get_children_json(json["M"])
-        if self.tree_right:
+        if self.trees["right"]:
             json["R"] = {}
-            json["R"]["node"] = str(self.tree_right)
-            self.tree_right.get_children_json(json["R"])
+            json["R"]["node"] = str(self.trees["right"])
+            self.trees["right"].get_children_json(json["R"])
 
     def promote(self, key):
         print("Converting Three-Node: {} with key: {} into a Temporary Four Node".format(self, key))
@@ -199,7 +199,7 @@ class FourNode(Node):
         # self.trees["left"] = None
         self.tree_mid_1 = None
         self.tree_mid_2 = None
-        self.tree_right = None
+        # self.trees["right"] = None
 
     def __repr__(self):
         return "({},{},{})".format(self.l_key, self.m_key, self.r_key)
@@ -216,7 +216,7 @@ class FourNode(Node):
             self.tree_mid_2 = node_r
         elif node.l_key < self.l_key < self.m_key < self.r_key < node.r_key:
             self.trees["left"] = node_l
-            self.tree_right = node_r
+            self.trees["right"] = node_r
         elif self.l_key < node.l_key < node.r_key < self.m_key < self.r_key:
             self.tree_mid_1 = node
         elif self.l_key < node.l_key < self.m_key < node.r_key < self.r_key:
@@ -224,14 +224,14 @@ class FourNode(Node):
             self.tree_mid_2 = node_r
         elif self.l_key < node.l_key < self.m_key < self.r_key < node.r_key:
             self.tree_mid_1 = node_l
-            self.tree_right = node_r
+            self.trees["right"] = node_r
         elif self.l_key < self.m_key < node.l_key < node.r_key < self.r_key:
             self.tree_mid_2 = node
         elif self.l_key < self.m_key < node.l_key < self.r_key < node.r_key:
             self.tree_mid_2 = node_l
-            self.tree_right = node_r
+            self.trees["right"] = node_r
         elif self.l_key < self.m_key < self.r_key < node.l_key < node.r_key:
-            self.tree_right = node
+            self.trees["right"] = node
 
     def add_two_node_as_child(self, node):
         if node.key < self.l_key:
@@ -241,16 +241,16 @@ class FourNode(Node):
         elif self.m_key < node.key < self.r_key:
             self.tree_mid_2 = node
         elif self.r_key < node.key:
-            self.tree_right = node
+            self.trees["right"] = node
 
     def get_children(self):
-        return [self.trees["left"], self.tree_mid_1, self.tree_mid_2, self.tree_right]
+        return [self.trees["left"], self.tree_mid_1, self.tree_mid_2, self.trees["right"]]
 
     def replace_node(self, node, new_node):
         if node == self.trees["left"]:
             self.trees["left"] = new_node
-        elif node == self.tree_right:
-            self.tree_right = new_node
+        elif node == self.trees["right"]:
+            self.trees["right"] = new_node
         elif self.type_of_node() == "ThreeNode":
             if node == self.tree_mid:
                 self.tree_mid = new_node
@@ -260,10 +260,10 @@ class FourNode(Node):
             json["L"] = {}
             json["L"]["node"] = self.trees["left"]
             self.trees["left"].get_children_json(json["L"])
-        if self.tree_right:
+        if self.trees["right"]:
             json["R"] = {}
-            json["R"]["node"] = self.tree_right
-            self.tree_right.get_children_json(json["R"])
+            json["R"]["node"] = self.trees["right"]
+            self.trees["right"].get_children_json(json["R"])
         if self.tree_mid_1:
             json["M_1"] = {}
             json["M_1"]["node"] = self.tree_mid_1
@@ -282,6 +282,6 @@ class FourNode(Node):
 
         r_node = TwoNode(self.r_key)
         r_node.add_child(self.tree_mid_2)
-        r_node.add_child(self.tree_right)
+        r_node.add_child(self.trees["right"])
 
         return l_node, self.m_key, r_node
