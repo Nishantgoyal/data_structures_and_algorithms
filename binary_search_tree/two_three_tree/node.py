@@ -1,12 +1,4 @@
-class TwoNode:
-
-    def __init__(self, key):
-        self.key = key
-        self.tree_left = None
-        self.tree_right = None
-
-    def __repr__(self):
-        return "({})".format(self.key)
+class Node:
 
     def type_of_node(self):
         return str(self.__class__).split(".")[1].split("'")[0]
@@ -41,6 +33,17 @@ class TwoNode:
                 print("Appending child: {} of type: {} to Node: {}".format(
                     child, child.type_of_node(), node))
                 node.add_child(child)
+
+
+class TwoNode(Node):
+
+    def __init__(self, key):
+        self.key = key
+        self.tree_left = None
+        self.tree_right = None
+
+    def __repr__(self):
+        return "({})".format(self.key)
 
     def replace_node(self, node, new_node):
         if node == self.tree_left:
@@ -105,7 +108,7 @@ class TwoNode:
         return node
 
 
-class ThreeNode:
+class ThreeNode(Node):
 
     def __init__(self, l_key, r_key):
         self.l_key = l_key
@@ -116,37 +119,6 @@ class ThreeNode:
 
     def __repr__(self):
         return "({},{})".format(self.l_key, self.r_key)
-
-    def type_of_node(self):
-        return str(self.__class__).split(".")[1].split("'")[0]
-
-    def is_leaf(self):
-        return [ele for ele in self.get_children() if ele is not None] == []
-
-    def add_child(self, child):
-        if child is None:
-            return
-        print("Adding Child: {} to Node: {}".format(child, self))
-        if child.type_of_node() == "TwoNode":
-            self.add_two_node_as_child(child)
-        else:
-            self.add_three_node_as_child(child)
-
-    def print_tree(self):
-        tree = {}
-        tree["node"] = str(self)
-        self.get_children_json(tree)
-        print(tree)
-        return tree
-
-    def add_child_to_node(self, node):
-        children = self.get_children()
-        print("Node: {} has children: {}".format(self, children))
-        for child in children:
-            if child:
-                print("Appending child: {} of type: {} to Node: {}".format(
-                    child, child.type_of_node(), node))
-                node.add_child(child)
 
     def replace_node(self, node, new_node):
         if node == self.tree_left:
@@ -177,7 +149,7 @@ class ThreeNode:
         r_node = TwoNode(self.r_key)
         r_node.add_child(self.tree_right)
 
-        return l_node, r_node
+        return l_node, None, r_node
 
     def add_three_node_as_child(self, node):
         node_l_key = node.l_key
@@ -243,7 +215,7 @@ class ThreeNode:
         return node
 
 
-class FourNode:
+class FourNode(Node):
 
     def __init__(self, l_key, m_key, r_key):
         self.l_key = l_key
@@ -256,24 +228,6 @@ class FourNode:
 
     def __repr__(self):
         return "({},{},{})".format(self.l_key, self.m_key, self.r_key)
-
-    def add_child(self, child):
-        if child is None:
-            return
-        print("Adding Child: {} to Node: {}".format(child, self))
-        if child.type_of_node() == "TwoNode":
-            self.add_two_node_as_child(child)
-        else:
-            self.add_three_node_as_child(child)
-
-    def add_child_to_node(self, node):
-        children = self.get_children()
-        print("Node: {} has children: {}".format(self, children))
-        for child in children:
-            if child:
-                print("Appending child: {} of type: {} to Node: {}".format(
-                    child, child.type_of_node(), node))
-                node.add_child(child)
 
     def add_three_node_as_child(self, node):
         node_l, node_r = node.split_node()
@@ -316,19 +270,6 @@ class FourNode:
 
     def get_children(self):
         return [self.tree_left, self.tree_mid_1, self.tree_mid_2, self.tree_right]
-
-    def is_leaf(self):
-        return [ele for ele in self.get_children() if ele is not None] == []
-
-    def print_tree(self):
-        tree = {}
-        tree["node"] = str(self)
-        self.get_children_json(tree)
-        print(tree)
-        return tree
-
-    def type_of_node(self):
-        return str(self.__class__).split(".")[1].split("'")[0]
 
     def replace_node(self, node, new_node):
         if node == self.tree_left:
