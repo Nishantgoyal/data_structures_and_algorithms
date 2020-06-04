@@ -11,6 +11,10 @@ class Fibonacci:
             yield c
 
     def get_nth_fibbo_number(self, N):
+        if N == 0:
+            return self.a
+        if N == 1:
+            return self.b
         i = 2
         for fibbo_num in self.next():
             if i == N:

@@ -13,7 +13,7 @@ def print_fibonacci_numbers(fibbo):
 def main():
     fibbo = Fibonacci()
     # print_fibonacci_numbers(fibbo)
-    N = 7
+    N = 2
     nth_fibbo = fibbo.get_nth_fibbo_number(N)
     print("Fibbonacci number for {} is {}".format(
         N, nth_fibbo))
