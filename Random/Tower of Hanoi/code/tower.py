@@ -6,7 +6,6 @@ class Tower:
     def __init__(self):
         self.N = int(sys.argv[1])
         self.tower = {}
-        self.initial_rod = "three"
 
     def initialise_tower(self, initial_rod):
         print("Initialising Tower...")
@@ -61,12 +60,11 @@ class Tower:
         return True
 
     def solve(self, initial_rod, final_rod, N=None):
-        print("S")
         if N is None:
             N = self.N
         if N == 0:
             return
         mid_rod = self.get_mid_rod(initial_rod, final_rod)      # three
-        # self.move_a_piece(initial_rod, mid_rod)
-
         self.solve(initial_rod, mid_rod, N - 1)
+        self.move_a_piece(initial_rod, final_rod)
+        self.solve(mid_rod, final_rod, N - 1)
