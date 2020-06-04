@@ -1,4 +1,5 @@
 import json
+import time
 import sys
 
 
@@ -43,6 +44,8 @@ class Tower:
                 print("Moving Piece: {} from Source '{}' to Destination '{}'".format(
                     source_piece, source_rod, destination_rod))
                 self.tower[destination_rod].append(source_piece)
+                self.print_tower()
+                time.sleep(2)
         else:
             print("Source or destination is wrong")
 
