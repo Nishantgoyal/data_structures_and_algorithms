@@ -40,7 +40,7 @@ class TwoNode(Node):
         return three_node
 
     def key_in_node(self, key):
-        if key == self.key:
+        if key in [self.key]:
             return True
         return False
 
@@ -119,9 +119,7 @@ class ThreeNode(Node):
         return f_node
 
     def key_in_node(self, key):
-        if key == self.l_key:
-            return True
-        if key == self.r_key:
+        if key in [self.l_key, self.r_key]:
             return True
         return False
 

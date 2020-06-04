@@ -2,3 +2,5 @@
 scratch.py
 *.json
 .idea
+resources/
+.DS_Store
