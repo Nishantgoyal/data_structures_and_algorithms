@@ -1,11 +1,12 @@
 from random import randint
 import time
 import math
+import copy
 
 
 class LCM:
     def __init__(self, arr):
-        self.arr = arr
+        self.arr = copy.deepcopy(arr)
         self.lcm = self.get_lcm()
 
     def check_if_arr_all_ones(self):
@@ -31,8 +32,8 @@ class LCM:
         """divides each element of the array by divisor, if it is divisible"""
         modified = False
         for index in range(len(self.arr)):
-            if arr[index] % divisor == 0:
-                arr[index] = arr[index] // divisor
+            if self.arr[index] % divisor == 0:
+                self.arr[index] = self.arr[index] // divisor
                 modified = True
         return modified
 
@@ -61,6 +62,6 @@ class LCM:
 
 
 if __name__ == "__main__":
-    arr = [randint(1, 101) for _ in range(5)]
+    arr = [randint(1, 11) for _ in range(5)]
     lcm = LCM(arr)
-    print("LCM: {}".format(lcm.lcm))
+    print("\nFor Arr: {}\nLCM: {}".format(arr, lcm.lcm))
