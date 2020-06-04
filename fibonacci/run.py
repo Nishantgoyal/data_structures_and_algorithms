@@ -2,8 +2,7 @@ from fibonacci import Fibonacci
 import time
 
 
-def print_fibonacci_numbers():
-    fibbo = Fibonacci()
+def print_fibonacci_numbers(fibbo):
     # print(fibbo.a)
     print(fibbo.b)
     for ele in fibbo.next():
@@ -12,7 +11,12 @@ def print_fibonacci_numbers():
 
 
 def main():
-    print_fibonacci_numbers()
+    fibbo = Fibonacci()
+    # print_fibonacci_numbers(fibbo)
+    N = 7
+    nth_fibbo = fibbo.get_nth_fibbo_number(N)
+    print("Fibbonacci number for {} is {}".format(
+        N, nth_fibbo))
 
 
 if __name__ == "__main__":
