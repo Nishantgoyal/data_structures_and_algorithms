@@ -8,10 +8,18 @@ class TwoThreeTree:
         self.root = None
 
     def print_tree(self):
-        if self.root is None:
-            print("[]")
-        else:
-            self.root.print_tree()
+        tree = self.get_tree()
+        print(tree)
+
+    def get_tree(self):
+        tree = []
+        if self.root is not None:
+            tree = self.root.get_tree()
+            fN = "{}.json".format(__file__.split(".")[0])
+            with open(fN, "w") as f_out:
+                json.dump(tree, f_out)
+        tree = json.dumps(tree, indent=2)
+        return tree
 
     def dump_json(self, data):
         fn = "{}_data.json".format(__name__.split(".")[0])
@@ -19,7 +27,7 @@ class TwoThreeTree:
             json.dump(data, f, indent=4)
 
     def insert(self, key):
-        print("Inserting into the Two Three Tree...")
+        print("Inserting {} into the Two Three Tree...".format(key))
         if self.root is None:
             print("Root Node is empty. Inserting into Root...")
             self.root = TwoNode(key)

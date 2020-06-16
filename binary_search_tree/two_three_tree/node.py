@@ -10,7 +10,7 @@ class TwoNode(Node):
         }
 
     def __repr__(self):
-        return "({})".format(self.key)
+        return "[{}]".format(self.key)
 
     def add_two_node_as_child(self, node):
         node_key = node.key
@@ -63,7 +63,7 @@ class ThreeNode(Node):
         }
 
     def __repr__(self):
-        return "({},{})".format(self.l_key, self.r_key)
+        return "[{},{}]".format(self.l_key, self.r_key)
 
     def add_two_node_as_child(self, node):
         if node.key < self.l_key:
@@ -143,10 +143,10 @@ class FourNode(Node):
         }
 
     def __repr__(self):
-        return "({},{},{})".format(self.l_key, self.m_key, self.r_key)
+        return "[{},{},{}]".format(self.l_key, self.m_key, self.r_key)
 
     def add_three_node_as_child(self, node):
-        node_l, node_r = node.split_node()
+        node_l, _, node_r = node.split_node()
         if node.l_key < node.r_key < self.l_key < self.m_key < self.r_key:
             self.trees["left"] = node
         elif node.l_key < self.l_key < node.r_key < self.m_key < self.r_key:

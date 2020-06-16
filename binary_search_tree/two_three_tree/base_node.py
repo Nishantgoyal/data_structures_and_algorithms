@@ -21,10 +21,13 @@ class Node:
             raise "Unable to add child of type: {}".format(child_type)
 
     def print_tree(self):
+        tree = self.get_tree()
+        print(tree)
+
+    def get_tree(self):
         tree = {}
         tree["node"] = str(self)
         self.get_children_json(tree)
-        print(tree)
         return tree
 
     def add_child_to_node(self, node):
@@ -47,7 +50,7 @@ class Node:
         for key in self.trees:
             if self.trees[key] is not None:
                 json[key] = {}
-                json[key]["node"] = self.trees[key]
+                json[key]["node"] = str(self.trees[key])
                 self.trees[key].get_children_json(json[key])
 
     def get_children(self):
